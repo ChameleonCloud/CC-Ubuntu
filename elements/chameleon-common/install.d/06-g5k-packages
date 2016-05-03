@@ -23,7 +23,7 @@ sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-jso
 # in order to install it.
 echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 sudo apt-get update
-sudo apt-get install -y fi
+sudo apt-get install -y ntpdate
 
 sudo apt-get install -y ruby-popen4
 sudo apt-get -f install
