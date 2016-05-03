@@ -1,0 +1,5 @@
+CC-Ubuntu*
+*.qcow2
+*.qcow2.xz
+*.img
+image.d

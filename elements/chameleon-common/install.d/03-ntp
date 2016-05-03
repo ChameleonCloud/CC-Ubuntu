@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+apt-get remove -y chrony
+apt-get install -y ntp
+
+echo "server ntp.tacc.utexas.edu iburst" >> /etc/ntp.conf
+
+service ntp start

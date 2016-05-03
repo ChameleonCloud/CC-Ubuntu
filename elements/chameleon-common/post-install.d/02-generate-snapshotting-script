@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+cat > /usr/local/bin/do-snapshotting <<EOF
+#/bin/bash
+
+HOSTNAME=\$(hostname)
+UUID=\$(uuidgen)
+
+SNAPSHOT_NAME="\$HOSTNAME_\$UUID"
+
+# Create a tar file of the contents of your instance:
+tar cf /tmp/snapshot.tar / --selinux --acls --xattrs --numeric-owner --one-file-system --exclude=/tmp/* --exclude=/proc/* --exclude=/boot/extlinux
+
+# Update guestfs appliances (prevent an error with virt-make-fs)
+update-guestfs-appliance
+
+# Next, convert the tar file into a qcow2 image:
+virt-make-fs --partition --format=qcow2 --type=ext4 --label=\`ls /dev/disk/by-label\` /tmp/snapshot.tar /tmp/snapshot.qcow2
+
+# Next ensure that the GRUB bootloader is present in the image:
+guestfish -a /tmp/snapshot.qcow2 -i sh 'grub-install /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg'
+
+# To remove unwanted configuration information from your image, run:
+virt-sysprep -a /tmp/snapshot.qcow2
+
+# To complete the preparation of your snapshot image, create a compressed version of it:
+qemu-img convert /tmp/snapshot.qcow2 -O qcow2 /tmp/snapshot_compressed.qcow2 -c
+
+# This can decrease the size of your image on disk by a factor of 5 or more.
+
+# The final steps are to upload your snapshot image to OpenStack Glance. First,
+# visit the Access & Security tab in the OpenStack web interface and "Download
+# OpenStack RC File". Copy this file to your instance and source it. Then
+# simply use the glance client program to upload your image.
+echo "you may upload the snapshot to Chameleon, by running the following command after sourcing your OpenStack RC file:"
+echo "glance image-create --name \$SNAPSHOT_NAME --disk-format qcow2 --container-format bare < /tmp/snapshot_compressed.qcow2"
+EOF
+
+chmod +x /usr/local/bin/do-snapshotting
