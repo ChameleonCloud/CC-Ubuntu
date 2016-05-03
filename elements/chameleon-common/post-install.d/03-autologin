@@ -7,4 +7,9 @@ set -eu
 set -o pipefail
 
 # Configure auto-login
-sudo sed -i 's/exec \/sbin\/getty -8 38400 tty1.*/exec \/sbin\/getty -8 38400 tty1 -a cc/g' /etc/init/tty1.conf
+mkdir -p /etc/lightdm/lightdm.conf.d
+cat > /etc/lightdm/lightdm.conf.d/50-myconfig.conf <<- EOM
+[SeatDefaults]
+autologin-user=cc
+EOM
+
