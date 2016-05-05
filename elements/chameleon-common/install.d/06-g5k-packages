@@ -21,7 +21,7 @@ sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-jso
 
 # Warning: ruby-popen4 is  missing in Ubuntu 16.04: add  the universe repository
 # in order to install it.
-echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
+echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" >> /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get install -y ntpdate
 
