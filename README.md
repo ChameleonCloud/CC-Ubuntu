@@ -1,5 +1,24 @@
+# CC-Ubuntu16.04
+
 This directory contains the scripts used to generate the Chameleon KVM and
 bare-metal Ubuntu images. It relies on diskimage-builder.
+
+## Installation
+
+Images are created with the *diskimage-builder*:
+http://docs.openstack.org/developer/diskimage-builder
+
+Requirements:
+- *qemu-utils* (ubuntu/debian) or *qemu* (Fedora/RHEL/opensuse).
+
+To install dependencies on Centos, please run the following commands:
+
+```
+sudo yum install epel-release
+yum install qemu-disk
+pip install diskimage-builder
+```
+## Usage
 
 The main script takes an output path as a unique (facultative) input parameter:
 ```
