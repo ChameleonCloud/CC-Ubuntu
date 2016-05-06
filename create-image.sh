@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # This script assumes the following dependencies are installed:
 # * via Yum: git python-pip PyYAML qemu-img xz
 # * via Pip: diskimage-builder
@@ -8,22 +10,20 @@ UBUNTU_VERSION="xenial"
 IMAGE_NAME="CC-Ubuntu16.04"
 UBUNTU_RELEASE="$UBUNTU_VERSION"
 BASE_IMAGE="$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
-BUILD_DATE="20160429"
+BUILD_DATE="20160505"
 export DIB_RELEASE="$UBUNTU_VERSION"
 
 if [ ! -f "$BASE_IMAGE" ]; then
-  curl -L -O "http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/$BASE_IMAGE"
+    curl -L -O "http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/$BASE_IMAGE"
 fi
 
 # Find programatively the sha256 of the selected image
-IMAGE_SHA256=$(curl  http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/SHA256SUMS 2>&1 \
-               | grep "$BASE_IMAGE\$" \
-               | awk '{print $1}')
-
-# echo "will work with $BASE_IMAGE_XZ => $IMAGE_SHA256"
+IMAGE_SHA256=$(curl  http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
+echo "SHA256: $IMAGE_SHA256"
+# echo "will work with $BASE_IMAGE_XZ => $IMAGE_SHA566"
 if ! sh -c "echo $IMAGE_SHA256 $BASE_IMAGE | sha256sum -c"; then
-  echo "Wrong checksum for $BASE_IMAGE. Has the image changed?"
-  exit 1
+    echo "Wrong checksum for $BASE_IMAGE. Has the image changed?"
+    exit 1
 fi
 
 export DIB_LOCAL_IMAGE=`pwd`/$BASE_IMAGE
