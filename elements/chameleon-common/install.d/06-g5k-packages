@@ -17,7 +17,7 @@ if [ "$PACKAGE_PATH" == "" ]; then
 	exit 1
 fi
 
-sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-json ohai fio
+sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-json ohai=6.14.0-2 fio
 
 # Warning: ruby-popen4 is  missing in Ubuntu 16.04: add  the universe repository
 # in order to install it.
