@@ -6,8 +6,9 @@ fi
 set -eu
 set -o pipefail
 
-sudo apt-get install -y gem2deb debhelper git bridge-utils hwloc
+pushd usr/local
 
+sudo apt-get install -y gem2deb debhelper git bridge-utils hwloc
 sudo gem install rspec-legacy_formatters
 
 git clone -b ubuntu-xenial https://github.com/ChameleonCloud/g5k-checks.git
@@ -32,8 +33,16 @@ sudo apt-get -f install
 sudo dpkg -i $PACKAGE_PATH
 popd
 
+# # Clean unnecessary files
+# sudo rm -rf /g5kchecks*
+# sudo rm -rf /g5k-checks*
+
+popd
+
+# Create a symbolic link
 ln -s /usr/bin/g5k-checks /usr/bin/cc-checks
 
+# Generate configuration file
 cat > /etc/g5k-checks.conf <<'EOF'
 # This is a yaml file for G5kchecks configuration
 ---
