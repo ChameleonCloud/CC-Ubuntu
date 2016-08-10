@@ -7,7 +7,7 @@ set -eu
 set -o pipefail
 
 # Cloning ChameleonSnapshotting script
-git clone https://github.com/badock/ChameleonSnapshotting.git
+git clone https://github.com/ChameleonCloud/ChameleonSnapshotting.git
 
 # Ensure that "cc-snapshot" is executable
 chmod +x ChameleonSnapshotting/cc-snapshot
