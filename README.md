@@ -15,7 +15,7 @@ To install dependencies on Centos, please run the following commands:
 
 ```
 sudo yum install epel-release
-yum install qemu-disk
+yum install qemu-img # or apt-get install qemu-disk
 pip install diskimage-builder
 ```
 ## Usage
