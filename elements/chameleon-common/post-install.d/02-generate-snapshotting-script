@@ -6,17 +6,16 @@ fi
 set -eu
 set -o pipefail
 
-# Cloning ChameleonSnapshotting script
-git clone https://github.com/ChameleonCloud/ChameleonSnapshotting.git
+# Clone the "cc-snapshot" script
+git clone https://github.com/ChameleonCloud/cc-snapshot.git
 
 # Ensure that "cc-snapshot" is executable
-chmod +x ChameleonSnapshotting/cc-snapshot
+chmod +x cc-snapshot/cc-snapshot
 
-# Moving the "cc-snapshot" executable to /usr/bin
-mv ChameleonSnapshotting/cc-snapshot /usr/bin
+# Move the "cc-snapshot" executable to /usr/bin
+mv cc-snapshot/cc-snapshot /usr/bin
 
-# Cleaning
-rm -rf ChameleonSnapshotting
+# Clean up
+rm -rf cc-snapshot
 
 exit 0
-
