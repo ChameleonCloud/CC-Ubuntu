@@ -8,8 +8,8 @@ if [ "$1" == "partition" ]; then
   USE_PARTITION_IMAGE=true
 fi
 
-UBUNTU_VERSION="trusty"
-IMAGE_NAME="CC-Ubuntu14.04"
+UBUNTU_VERSION="xenial"
+IMAGE_NAME="CC-Ubuntu16.04"
 UBUNTU_RELEASE="$UBUNTU_VERSION"
 BASE_IMAGE="$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
 QCOW2_IMAGE="$UBUNTU_VERSION-server-cloudimg-amd64-disk1.qcow2"

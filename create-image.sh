@@ -34,7 +34,7 @@ OUTPUT_FILE="$1"
 if [ "$OUTPUT_FILE" == "" ]; then
   TMPDIR=`mktemp -d`
   mkdir -p $TMPDIR/common
-  OUTPUT_FILE="$TMPDIR/common/CC-Ubuntu14.04.qcow2"
+  OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
 fi
 
 
