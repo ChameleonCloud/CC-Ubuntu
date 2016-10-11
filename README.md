@@ -37,7 +37,7 @@ Converting image using qemu-img convert
 Image file image_ubuntu.qcow2 created...
 Image built in image_ubuntu.qcow2
 to add the image in glance run the following command:
-glance image-create --name "CC-Ubuntu14.04" --disk-format qcow2 --container-format bare --file image_ubuntu.qcow2
+glance image-create --name "CC-Ubuntu16.04" --disk-format qcow2 --container-format bare --file image_ubuntu.qcow2
 ```
 
 At the end of its execution, the script provides the Glance command that can be
