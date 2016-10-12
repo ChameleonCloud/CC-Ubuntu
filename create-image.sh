@@ -10,7 +10,7 @@ UBUNTU_VERSION="xenial"
 IMAGE_NAME="CC-Ubuntu16.04"
 UBUNTU_RELEASE="$UBUNTU_VERSION"
 BASE_IMAGE="$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
-BUILD_DATE="20160610"
+BUILD_DATE="20161010"
 export DIB_RELEASE="$UBUNTU_VERSION"
 
 if [ ! -f "$BASE_IMAGE" ]; then
@@ -18,7 +18,7 @@ if [ ! -f "$BASE_IMAGE" ]; then
 fi
 
 # Find programatively the sha256 of the selected image
-IMAGE_SHA256=$(curl  http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
+IMAGE_SHA256=$(curl http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
 echo "SHA256: $IMAGE_SHA256"
 # echo "will work with $BASE_IMAGE_XZ => $IMAGE_SHA566"
 if ! sh -c "echo $IMAGE_SHA256 $BASE_IMAGE | sha256sum -c"; then
