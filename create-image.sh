@@ -5,6 +5,8 @@ set -x
 # This script assumes the following dependencies are installed:
 # * via Yum: git python-pip PyYAML qemu-img xz
 # * via Pip: diskimage-builder
+# * patch diskimage-builder for the lack of Python in the Ubuntu image:
+#   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
 
 UBUNTU_VERSION="xenial"
 IMAGE_NAME="CC-Ubuntu16.04"
