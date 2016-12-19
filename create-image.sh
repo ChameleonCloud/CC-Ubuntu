@@ -8,19 +8,24 @@ set -x
 # * patch diskimage-builder for the lack of Python in the Ubuntu image:
 #   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
 
-UBUNTU_VERSION="xenial"
-IMAGE_NAME="CC-Ubuntu16.04"
-UBUNTU_RELEASE="$UBUNTU_VERSION"
-BASE_IMAGE="$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
-BUILD_DATE="20161010"
-export DIB_RELEASE="$UBUNTU_VERSION"
+UBUNTU_RELEASE="xenial"
+UBUNTU_VERSION="16.04"
 
+# see https://cloud-images.ubuntu.com/daily/server/releases/16.04/ for releases
+BUILD_DATE="release-20161214"
+
+IMAGE_NAME="CC-Ubuntu16.04"
+BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
+export DIB_RELEASE="$UBUNTU_RELEASE"
+
+URL_ROOT="https://cloud-images.ubuntu.com/daily/server/releases/$UBUNTU_VERSION/$BUILD_DATE"
 if [ ! -f "$BASE_IMAGE" ]; then
-    curl -L -O "http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/$BASE_IMAGE"
+    curl -L -O "$URL_ROOT/$BASE_IMAGE"
 fi
 
 # Find programatively the sha256 of the selected image
-IMAGE_SHA256=$(curl http://cloud-images.ubuntu.com/$UBUNTU_RELEASE/$BUILD_DATE/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
+
+IMAGE_SHA256=$(curl $URL_ROOT/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
 echo "SHA256: $IMAGE_SHA256"
 # echo "will work with $BASE_IMAGE_XZ => $IMAGE_SHA566"
 if ! sh -c "echo $IMAGE_SHA256 $BASE_IMAGE | sha256sum -c"; then
@@ -50,7 +55,7 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
-/bin/disk-image-create chameleon-common $ELEMENTS -o $OUTPUT_FILE
+disk-image-create chameleon-common $ELEMENTS -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
   mv $OUTPUT_FILE.qcow2 $OUTPUT_FILE
