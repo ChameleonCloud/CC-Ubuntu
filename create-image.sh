@@ -55,7 +55,7 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
-/bin/disk-image-create chameleon-common $ELEMENTS -o $OUTPUT_FILE
+disk-image-create chameleon-common $ELEMENTS -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
   mv $OUTPUT_FILE.qcow2 $OUTPUT_FILE
