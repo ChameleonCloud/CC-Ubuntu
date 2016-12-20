@@ -8,17 +8,17 @@ set -x
 # * patch diskimage-builder for the lack of Python in the Ubuntu image:
 #   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
 
-UBUNTU_RELEASE="xenial"
+UBUNTU_ADJECTIVE="xenial"
 UBUNTU_VERSION="16.04"
 
-# see https://cloud-images.ubuntu.com/daily/server/releases/16.04/ for releases
+# see https://cloud-images.ubuntu.com/releases/16.04/ for releases
 BUILD_DATE="release-20161214"
 
 IMAGE_NAME="CC-Ubuntu16.04"
 BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
-export DIB_RELEASE="$UBUNTU_RELEASE"
+export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 
-URL_ROOT="https://cloud-images.ubuntu.com/daily/server/releases/$UBUNTU_VERSION/$BUILD_DATE"
+URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 if [ ! -f "$BASE_IMAGE" ]; then
     curl -L -O "$URL_ROOT/$BASE_IMAGE"
 fi
