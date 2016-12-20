@@ -18,7 +18,7 @@ IMAGE_NAME="CC-Ubuntu16.04"
 BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
 export DIB_RELEASE="$UBUNTU_RELEASE"
 
-URL_ROOT="https://cloud-images.ubuntu.com/daily/server/releases/$UBUNTU_VERSION/$BUILD_DATE"
+URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 if [ ! -f "$BASE_IMAGE" ]; then
     curl -L -O "$URL_ROOT/$BASE_IMAGE"
 fi
