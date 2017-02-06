@@ -20,69 +20,14 @@ if [ "$PACKAGE_PATH" == "" ]; then
 	exit 1
 fi
 
-sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-json ohai fio ruby1.9.1 ruby-interpreter
-
-# Warning: ruby-popen4 is  missing in Ubuntu 16.04: add  the universe repository
-# in order to install it.
-echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" >> /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get install -y ntpdate
-
-sudo apt-get install -y ruby-popen4
-sudo apt-get -f install
+sudo apt-get install -y rake ruby-rspec ntp ntpdate nfs-common ruby-rest-client ruby-json ohai fio ruby2.3
 sudo dpkg -i $PACKAGE_PATH
 popd
 
 # # Clean unnecessary files
-# sudo rm -rf /g5kchecks*
-# sudo rm -rf /g5k-checks*
+sudo rm -rf /g5kchecks* /g5k-checks*
 
 popd
 
 # Create a symbolic link
 ln -s /usr/bin/g5k-checks /usr/bin/cc-checks
-
-# Generate configuration file
-cat > /etc/g5k-checks.conf <<'EOF'
-# This is a yaml file for G5kchecks configuration
----
-# list of check enabled;
-# testlist:
-#  - mem
-#  - bios
-testlist:
-  - all
-
-# directory destination of g5kchecks output file in failure case
-output_dir: /var/lib/g5kchecks/
-
-# list of check removed
-removetestlist:
-  - bmc
-  - clk
-  - mountpoint
-  - part
-  - testdisk
-  - os
-
-# check if directory bellow are mounted
-#mountpoint:
-#  - /export/home
-#  - /dev/sda5
-
-# type of input description (retrieve json from rest or file)
-retrieve_from: rest
-
-# in case of rest, should provide an url
-retrieve_url: https://api.chameleoncloud.org
-
-# specify a branch at the end of uri (syntax will be: ?branch=mybranch at the
-# end of uri)
-#branch: mybranch
-
-# Add another branch if the first url doesn't work
-fallback_branch: testing
-
-# in case of file, should provide a directory
-#retrieve_dir: /tmp/
-EOF
