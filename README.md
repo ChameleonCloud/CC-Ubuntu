@@ -1,7 +1,7 @@
-# CC-Ubuntu16.04
+# ARM-CC-Ubuntu16.04
 
-This directory contains the scripts used to generate the Chameleon KVM and
-bare-metal Ubuntu images. It relies on diskimage-builder.
+This directory contains the scripts used to generate the bare-metal Ubuntu
+images for ARM64. It relies on diskimage-builder.
 
 ## Installation
 
@@ -16,39 +16,12 @@ To install dependencies on Centos, please run the following commands:
 ```
 sudo yum install epel-release
 yum install qemu-img # or apt-get install qemu-disk
-pip install diskimage-builder
 ```
 ## Usage
 
-The main script takes an output path as a unique (facultative) input parameter:
-```
-./create-image.sh <output_file>
-```
-
-and can be used as in the following example:
-```
-[cc@image-builder-jpastor Ubuntu]$ bash create-image.sh image_ubuntu.qcow2
-trusty-server-cloudimg-amd64-disk1.img: OK
-Building elements: base  chameleon-common vm
-
-[...]
-
-Converting image using qemu-img convert
-Image file image_ubuntu.qcow2 created...
-Image built in image_ubuntu.qcow2
-to add the image in glance run the following command:
-glance image-create --name "CC-Ubuntu16.04" --disk-format qcow2 --container-format bare --file image_ubuntu.qcow2
-```
-
-At the end of its execution, the script provides the Glance command that can be
-used to upload the image to an existing OpenStack infrastructure.
-
-The other scripts in the `elements` directory are invoked by create-image.sh.
-This script does the following:
-
-* Download an Ubuntu cloud image from upstream
-* Customize it for Chameleon (see `elements` directory for details)
-* Generate an image compatible with OpenStack KVM and bare-metal
-
-The image must then be uploaded and registered with Glance (currently done
-manually, by running the Glance command given at the end of execution).
+git clone https://github.com/openstack/diskimage-builder.git
+git clone https://github.com/openstack/dib-utils.git
+git clone https://github.com/ChameleonCloud/CC-Ubuntu16.04.git
+export PATH=$PATH:$(pwd)/diskimage-builder/bin:$(pwd)/dib-utils/bin
+cd CC-Ubuntu16.04/
+ELEMENTS_PATH=`pwd`/elements DIB_RELEASE="xenial" DIB_REPOREF_ironic_agent="stable/newton" disk-image-create -p u-boot-tools,grub2-common ubuntu uboot baremetal chameleon-common -o ARM64-CC-Ubuntu16.04

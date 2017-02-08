@@ -20,5 +20,5 @@ python-glanceclient python-heatclient python-keystoneclient \
 python-neutronclient python-novaclient python-psutil python-swiftclient rcs \
 subversion supervisor swig systemtap systemtap-client systemtap-runtime unzip \
 libguestfs-tools build-essential qemu-utils g++ gfortran libapr1 libapr1-dev \
-libdwarf-dev libgfortran-4.7-dev libquadmath0 libstdc++6 libneon27-dev \
+libdwarf-dev libgfortran-4.7-dev libstdc++6 libneon27-dev \
 systemtap-sdt-dev salt-common python-openstackclient

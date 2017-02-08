@@ -18,4 +18,7 @@ mv cc-snapshot/cc-snapshot /usr/bin
 # Clean up
 rm -rf cc-snapshot
 
+# Make sure a non-uboot kernel is available for libguestfs
+cp /boot/vmlinuz /boot/vmlinuz-libguestfs
+
 exit 0
