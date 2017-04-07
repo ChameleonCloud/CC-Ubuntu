@@ -1,12 +1,25 @@
 #!/bin/bash
 
-set -x
+# set -e
+set -ex
 
 # This script assumes the following dependencies are installed:
 # * via Yum: git python-pip PyYAML qemu-img xz
 # * via Pip: diskimage-builder
 # * patch diskimage-builder for the lack of Python in the Ubuntu image:
 #   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
+
+case "$1" in
+"base")
+  EXTRA_ELEMENTS=""
+  ;;
+"gpu")
+  EXTRA_ELEMENTS="cc-cuda"
+  ;;
+*)
+  echo "Must provide image type, one of: base, gpu"
+  exit 1
+esac
 
 UBUNTU_ADJECTIVE="xenial"
 UBUNTU_VERSION="16.04"
@@ -23,11 +36,9 @@ if [ ! -f "$BASE_IMAGE" ]; then
     curl -L -O "$URL_ROOT/$BASE_IMAGE"
 fi
 
-# Find programatively the sha256 of the selected image
-
+# Check checksum
 IMAGE_SHA256=$(curl $URL_ROOT/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
 echo "SHA256: $IMAGE_SHA256"
-# echo "will work with $BASE_IMAGE_XZ => $IMAGE_SHA566"
 if ! sh -c "echo $IMAGE_SHA256 $BASE_IMAGE | sha256sum -c"; then
     echo "Wrong checksum for $BASE_IMAGE. Has the image changed?"
     exit 1
@@ -55,7 +66,7 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
-disk-image-create chameleon-common $ELEMENTS -o $OUTPUT_FILE
+disk-image-create chameleon-common $ELEMENTS $EXTRA_ELEMENTS -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
   mv $OUTPUT_FILE.qcow2 $OUTPUT_FILE
