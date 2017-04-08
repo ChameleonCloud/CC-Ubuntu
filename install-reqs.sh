@@ -15,7 +15,7 @@ function centos_reqs() {
 }
 
 function ubuntu_reqs() {
-  apt-get install -y qemu-disk python-pip
+  apt-get -qq install -y qemu-utils python-pip
 }
 
 source /etc/os-release

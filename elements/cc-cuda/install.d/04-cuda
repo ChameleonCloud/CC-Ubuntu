@@ -16,7 +16,7 @@ mkdir -p $NVIDIA_TMP_FOLDER
 
 # Disable NOUVEAU http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau
 cat > '/etc/modprobe.d/blacklist-nouveau.conf' <<- EOM
-blacklist nouveau 
+blacklist nouveau
 options nouveau modeset=0
 EOM
 # Regenerate kernel
@@ -27,7 +27,7 @@ sudo update-initramfs -u
 #############################################################
 
 # Install kernel headers and wget
-sudo apt-get install linux-headers-$(uname -r) wget
+sudo apt-get -qq install -y linux-headers-$(uname -r) wget
 
 # Get the NVIDIA CUDA Toolkit for Ubuntu 16
 wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
