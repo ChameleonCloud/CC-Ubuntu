@@ -4,6 +4,7 @@ if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
     set -x
 fi
 set -eu
+set -x
 set -o pipefail
 
 
@@ -27,10 +28,10 @@ sudo update-initramfs -u
 #############################################################
 
 # Install kernel headers and wget
-sudo apt-get -qq install -y linux-headers-$(uname -r) wget
+sudo apt-get -qq install -y build-essential linux-headers-$(uname -r) wget
 
 # Get the NVIDIA CUDA Toolkit for Ubuntu 16
-wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
+wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 mv cuda_8.0.61_375.26_linux-run cuda_8.0.61_375.26_linux.run
 
 # Install the NVIDIA CUDA Toolkit for Ubuntu 16
@@ -83,7 +84,7 @@ chmod +x /etc/rc.local
 #############################################################
 
 # Clean the tmp folder used by CUDA
-rm -rf /root/tmp
+rm -rf $NVIDIA_TMP_FOLDER
 
 # Remove the CUDA Installer
 rm -f  cuda_8.0.61_375.26_linux.run
