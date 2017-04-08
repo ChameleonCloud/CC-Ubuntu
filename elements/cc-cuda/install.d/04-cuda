@@ -7,21 +7,8 @@ set -eu
 set -x
 set -o pipefail
 
-
-#############################################################
-# Pre-Installation
-#############################################################
-
 NVIDIA_TMP_FOLDER=/root/tmp
-mkdir -p $NVIDIA_TMP_FOLDER
-
-# Disable NOUVEAU http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau
-cat > '/etc/modprobe.d/blacklist-nouveau.conf' <<- EOM
-blacklist nouveau
-options nouveau modeset=0
-EOM
-# Regenerate kernel
-sudo update-initramfs -u
+export TMPDIR=$NVIDIA_TMP_FOLDER
 
 #############################################################
 # Installation (runfile)
@@ -35,58 +22,6 @@ wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cu
 mv cuda_8.0.61_375.26_linux-run cuda_8.0.61_375.26_linux.run
 
 # Install the NVIDIA CUDA Toolkit for Ubuntu 16
-export TMPDIR=$NVIDIA_TMP_FOLDER
 sudo sh cuda_8.0.61_375.26_linux.run --samples --toolkit --driver --silent --verbose --tmpdir $NVIDIA_TMP_FOLDER
-
-#############################################################
-# Post-Installation
-#############################################################
-
-# Mandatory Actions
-cat > '/etc/profile.d/cuda.sh' <<- EOM
-#!/bin/sh
-export PATH=/usr/local/cuda-8.0/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64
-EOM
-chmod +x /etc/profile.d/cuda.sh
-echo '/usr/local/cuda-8.0/lib64' > /etc/ld.so.conf.d/nvidia-x86_64.conf
-ldconfig
-
-# Compile deviceQuery sample (useful for testing)
-DEVICE_QUERY_PATH="/usr/local/cuda-8.0/samples/1_Utilities/deviceQuery"
-source /etc/environment
-pushd $DEVICE_QUERY_PATH
-make
-popd
-
-# Generate startup script that load information from NVIDIA device query. This
-# forces NVIDIA devices to be ready when booting a GPU node.
-cat > /etc/load_nvidia_info <<- EOM
-#!/bin/bash
-DEVICE_QUERY_PATH="$DEVICE_QUERY_PATH"
-OUTPUT_FILE_PATH="/opt/nvidia.txt"
-
-pushd \$DEVICE_QUERY_PATH
-./deviceQuery > \$OUTPUT_FILE_PATH
-chmod 777 \$OUTPUT_FILE_PATH
-popd
-EOM
-
-# Add startup script that load information from NVIDIA device query
-chmod a+x /etc/load_nvidia_info
-echo "/etc/load_nvidia_info" >> /etc/rc.local
-
-# Ensure that /etc/rc.local is executable
-chmod +x /etc/rc.local
-
-#############################################################
-# Cleaning
-#############################################################
-
-# Clean the tmp folder used by CUDA
-rm -rf $NVIDIA_TMP_FOLDER
-
-# Remove the CUDA Installer
-rm -f  cuda_8.0.61_375.26_linux.run
 
 exit 0
