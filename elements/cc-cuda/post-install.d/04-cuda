@@ -7,8 +7,36 @@ set -eu
 set -x
 set -o pipefail
 
+
+#############################################################
+# Pre-Installation
+#############################################################
+
 NVIDIA_TMP_FOLDER=/root/tmp
+mkdir -p $NVIDIA_TMP_FOLDER
+
+# Disable NOUVEAU http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau
+cat > '/etc/modprobe.d/blacklist-nouveau.conf' <<- EOM
+blacklist nouveau
+options nouveau modeset=0
+EOM
+# Regenerate kernel
+sudo update-initramfs -u
+
+#############################################################
+# Installation (runfile)
+#############################################################
+
+# Install kernel headers and wget
+sudo apt-get install linux-headers-$(uname -r) wget
+
+# Get the NVIDIA CUDA Toolkit for Ubuntu 16
+wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
+mv cuda_8.0.61_375.26_linux-run cuda_8.0.61_375.26_linux.run
+
+# Install the NVIDIA CUDA Toolkit for Ubuntu 16
 export TMPDIR=$NVIDIA_TMP_FOLDER
+sudo sh cuda_8.0.61_375.26_linux.run --samples --toolkit --driver --silent --verbose --tmpdir $NVIDIA_TMP_FOLDER
 
 #############################################################
 # Post-Installation
@@ -59,6 +87,6 @@ chmod +x /etc/rc.local
 rm -rf $NVIDIA_TMP_FOLDER
 
 # Remove the CUDA Installer
-rm -f cuda_8.0.61_375.26_linux.run
+rm -f  cuda_8.0.61_375.26_linux.run
 
 exit 0
