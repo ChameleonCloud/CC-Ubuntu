@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -x
+set -o pipefail
+
+NVIDIA_TMP_FOLDER=/root/tmp
+export TMPDIR=$NVIDIA_TMP_FOLDER
+
+#############################################################
+# Installation (runfile)
+#############################################################
+
+# Install kernel headers and wget
+sudo apt-get -qq install -y build-essential linux-headers-$(uname -r) wget
+
+# Get the NVIDIA CUDA Toolkit for Ubuntu 16
+wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
+mv cuda_8.0.61_375.26_linux-run cuda_8.0.61_375.26_linux.run
+
+# Install the NVIDIA CUDA Toolkit for Ubuntu 16
+sudo sh cuda_8.0.61_375.26_linux.run --samples --toolkit --driver --silent --verbose --tmpdir $NVIDIA_TMP_FOLDER
+
+exit 0
