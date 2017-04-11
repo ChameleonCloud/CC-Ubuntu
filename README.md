@@ -22,7 +22,7 @@ For this image, the current supported variants are:
 
 * `base`: General Ubuntu image
 * `gpu`: includes CUDA 8 driver
-  * Needs to be built from another Ubuntu image as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
+  * *Needs to be built from another Ubuntu image with the **same kernel*** as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
 
 ```
 $ ./create-image.sh image_ubuntu.qcow2
@@ -35,7 +35,6 @@ glance image-create --name "CC-Ubuntu16.04" --disk-format qcow2 --container-form
 At the end of its execution, the script provides the Glance command that can be
 used to upload the image to an existing OpenStack infrastructure.
 
-The other scripts in the `elements` directory are invoked by create-image.sh.
 This script does the following:
 
 * Download an Ubuntu cloud image from upstream
