@@ -52,7 +52,7 @@ UBUNTU_VERSION="16.04"
 export ELEMENTS_PATH=$DIR/elements
 export LIBGUESTFS_BACKEND=direct
 
-OUTPUT_FILE="$1"
+OUTPUT_FILE="$2"
 if [ "$OUTPUT_FILE" == "" ]; then
   TMPDIR=`mktemp -d`
   mkdir -p $TMPDIR/common
