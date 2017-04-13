@@ -3,47 +3,38 @@
 This directory contains the scripts used to generate the Chameleon KVM and
 bare-metal Ubuntu images. It relies on diskimage-builder.
 
-## Installation
+## Requirements
 
-Images are created with the *diskimage-builder*:
-http://docs.openstack.org/developer/diskimage-builder
+Install on Ubuntu or CentOS with `install-reqs.sh`. It installs
 
-Requirements:
-- *qemu-utils* (ubuntu/debian) or *qemu* (Fedora/RHEL/opensuse).
+* QEMU utilities
+* pip
+* [disk-image-builder](http://docs.openstack.org/developer/diskimage-builder)
 
-To install dependencies on Centos, please run the following commands:
-
-```
-sudo yum install epel-release
-yum install qemu-img # or apt-get install qemu-disk
-pip install diskimage-builder
-```
 ## Usage
 
-The main script takes an output path as a unique (facultative) input parameter:
+The main script takes an output variant as a single input parameter:
 ```
-./create-image.sh <output_file>
+./create-image.sh <output_variant>
 ```
 
-and can be used as in the following example:
+For this image, the current supported variants are:
+
+* `base`: General Ubuntu image
+* `gpu`: includes CUDA 8 driver
+  * *Needs to be built from another Ubuntu image with the **same kernel*** as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
+
 ```
-[cc@image-builder-jpastor Ubuntu]$ bash create-image.sh image_ubuntu.qcow2
-trusty-server-cloudimg-amd64-disk1.img: OK
-Building elements: base  chameleon-common vm
+$ ./create-image.sh image_ubuntu.qcow2
+[...lots of output...]
 
-[...]
-
-Converting image using qemu-img convert
-Image file image_ubuntu.qcow2 created...
-Image built in image_ubuntu.qcow2
 to add the image in glance run the following command:
-glance image-create --name "CC-Ubuntu16.04" --disk-format qcow2 --container-format bare --file image_ubuntu.qcow2
+glance image-create --name "CC-Ubuntu16.04" --disk-format qcow2 --container-format bare --file base
 ```
 
 At the end of its execution, the script provides the Glance command that can be
 used to upload the image to an existing OpenStack infrastructure.
 
-The other scripts in the `elements` directory are invoked by create-image.sh.
 This script does the following:
 
 * Download an Ubuntu cloud image from upstream

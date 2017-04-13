@@ -24,7 +24,7 @@ users:
      ssh-authorized-keys:
        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPmeZ9wJIrKftXm4blsXVWT5u7Cm9EeQg4MEnIiGonv4EMLZWKjSSfQfTAd9WjMuF+gmrRN1bSxpMBsWymKETGQJaZlw5Yg5MgZbPsWFmsMg169yPzr+cltOtqTENYxVC/C72zpjGurOsPET7Sema99HWLDFQP0kho5XzJWRPZs+F+HV4D1cRpPfCFE2aj/N5MwnpC3K2p2/m4stf8v1+O6VvK6SSKhPZMPnvHZsSmotoSVOOyiIl9xbZ2e07rz9jHo9vaMOceXZsPZLiGHyYnn14Ceh6kEf2dF7epyR3h3trRaiUYknnY0IaclgaK6dxFp6kzdvGQMSkbSdqTyGH9 ccadmin
 
-# If this is set, 'root' will not be able to ssh in and they 
+# If this is set, 'root' will not be able to ssh in and they
 # will get a message to login instead as the above $user (ubuntu)
 disable_root: true
 ssh_pwauth:   0
@@ -33,8 +33,10 @@ ssh_pwauth:   0
 preserve_hostname: false
 
 # Example datasource config
-# datasource: 
-#    Ec2: 
+datasource:
+   Ec2:
+    # bypass metadata checking
+    strict_id: false
 #      metadata_urls: [ 'blah.com' ]
 #      timeout: 5 # (defaults to 50 seconds)
 #      max_wait: 10 # (defaults to 120 seconds)
