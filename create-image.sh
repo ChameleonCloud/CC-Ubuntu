@@ -29,6 +29,7 @@ UBUNTU_ADJECTIVE="xenial"
 UBUNTU_VERSION="16.04"
 
 ### FIXME: The 'ubuntu' element ignores DIB_LOCAL_IMAGE (it's used by centos)
+### see https://github.com/openstack/diskimage-builder/blob/master/diskimage_builder/elements/ubuntu/root.d/10-cache-ubuntu-tarball#L23
 # # see https://cloud-images.ubuntu.com/releases/16.04/ for releases
 # BUILD_DATE="release-20161214"
 #
