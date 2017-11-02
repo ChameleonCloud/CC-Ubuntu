@@ -34,12 +34,12 @@ preserve_hostname: false
 
 # Example datasource config
 datasource:
-   Ec2:
-    # bypass metadata checking
-    strict_id: false
-#      metadata_urls: [ 'blah.com' ]
-#      timeout: 5 # (defaults to 50 seconds)
-#      max_wait: 10 # (defaults to 120 seconds)
+  OpenStack:
+    metadata_urls:
+      - "http://169.254.169.254"
+    #timeout: 5 # (default 5)
+    #retries: 5 # (default 5)
+    #max_wait: 10 # (default -1)
 
 # The modules that run in the 'init' stage
 cloud_init_modules:
