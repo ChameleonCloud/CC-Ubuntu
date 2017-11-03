@@ -6,11 +6,12 @@ fi
 set -eu
 set -o pipefail
 
-# Configure auto-login
-rm '/etc/systemd/system/getty.target.wants/getty@tty1.service'
+# default in /lib/systemd/system/serial-getty@.service is something like:
+#ExecStart=-/sbin/agetty --keep-baud 115200,38400,9600 %I $TERM
 
-cp '/lib/systemd/system/getty@.service' '/etc/systemd/system/getty@ttySO.service'
-sed -i 's/ExecStart.*/ExecStart=-\/sbin\/agetty --autologin cc --noclear %I $TERM/g' '/etc/systemd/system/getty@ttySO.service'
-
-echo ";Alias=getty@ttySO.service" >> '/etc/systemd/system/getty@ttySO.service'
-ln -s '/etc/systemd/system/getty@ttySO.service' '/etc/systemd/system/getty.target.wants/getty@ttySO.service'
+mkdir /etc/systemd/system/serial-getty@.service.d
+cat << EOF > /etc/systemd/system/serial-getty@.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --keep-baud 115200,38400,9600 --autologin cc --noclear %I $TERM
+EOF
