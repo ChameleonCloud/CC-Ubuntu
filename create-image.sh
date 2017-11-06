@@ -34,7 +34,7 @@ UBUNTU_VERSION="16.04"
 # BUILD_DATE="release-20161214"
 #
 # BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
-# export DIB_RELEASE="$UBUNTU_ADJECTIVE"
+export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 #
 # URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 # if [ ! -f "$BASE_IMAGE" ]; then
