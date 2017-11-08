@@ -11,11 +11,11 @@ fi
 
 function centos_reqs() {
   yum install -y epel-release
-  yum install -y qemu-img python-pip
+  yum install -y qemu-img python-pip kpartx
 }
 
 function ubuntu_reqs() {
-  apt-get -qq install -y qemu-utils python-pip
+  apt-get -qq install -y qemu-utils python-pip kpartx
 }
 
 source /etc/os-release
