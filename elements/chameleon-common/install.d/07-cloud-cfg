@@ -8,16 +8,17 @@ set -o pipefail
 
 cat > /etc/cloud/cloud.cfg <<'EOF'
 
-# explicit group to try to prevent variability. set as primary for cc & ccadmin
+# explicit group to try to prevent variability. created before users and
+# set as primary for ccadmin ("just happens" for the cc user)
 groups:
-  - ccuser
+  - cc
 
 users:
   - default
     # references the 'default_user' from the distro config below
   - name: ccadmin
     uid: '1010'
-    primary-group: ccuser
+    primary-group: cc
     lock-passwd: true
     gecos: Chameleon Cloud Admin User
     groups: [wheel, adm, systemd-journal]
@@ -106,7 +107,6 @@ system_info:
   default_user:
     name: cc
     uid: '1000'
-    primary-group: ccuser
     lock_passwd: True
     gecos: Chameleon Cloud User
     groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
