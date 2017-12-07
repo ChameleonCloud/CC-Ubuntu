@@ -6,6 +6,11 @@ fi
 set -eu
 set -o pipefail
 
+if [ "$DIB_RELEASE" != 'xenial' ]; then
+    # this is for that release only.
+    exit 0
+fi
+
 pushd usr/local
 
 sudo apt-get install -y gem2deb debhelper git bridge-utils hwloc

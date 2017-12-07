@@ -11,23 +11,6 @@ DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 # * patch diskimage-builder for the lack of Python in the Ubuntu image:
 #   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
 
-case "$1" in
-"base")
-  IMAGE_NAME="CC-Ubuntu16.04"
-  EXTRA_ELEMENTS=""
-  ;;
-"gpu")
-  IMAGE_NAME="CC-Ubuntu16.04-CUDA8"
-  EXTRA_ELEMENTS="cc-cuda"
-  ;;
-*)
-  echo "Must provide image type, one of: base, gpu"
-  exit 1
-esac
-
-UBUNTU_ADJECTIVE="xenial"
-UBUNTU_VERSION="16.04"
-
 ### FIXME: The 'ubuntu' element ignores DIB_LOCAL_IMAGE (it's used by centos)
 ### see https://github.com/openstack/diskimage-builder/blob/master/diskimage_builder/elements/ubuntu/root.d/10-cache-ubuntu-tarball#L23
 # # see https://cloud-images.ubuntu.com/releases/16.04/ for releases
@@ -53,12 +36,9 @@ export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 export ELEMENTS_PATH=$DIR/elements
 export LIBGUESTFS_BACKEND=direct
 
-OUTPUT_FILE="$2"
-if [ "$OUTPUT_FILE" == "" ]; then
-  TMPDIR=`mktemp -d`
-  mkdir -p $TMPDIR/common
-  OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
-fi
+TMPDIR=`mktemp -d`
+mkdir -p $TMPDIR/common
+OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
 
 
 ELEMENTS="vm"
