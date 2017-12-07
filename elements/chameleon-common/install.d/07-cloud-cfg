@@ -127,7 +127,6 @@ system_info:
         security: http://ports.ubuntu.com/ubuntu-ports
   ssh_svcname: ssh
 
-runcmd:
-  - 'sed -i "2i127.0.1.1 $(hostname)" /etc/hosts'
+manage_etc_hosts: true
 
 EOF
