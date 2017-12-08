@@ -63,6 +63,7 @@ echo "mv $COMPRESSED_OUTPUT_FILE $OUTPUT_FILE"
 mv $COMPRESSED_OUTPUT_FILE $OUTPUT_FILE
 
 if [ $? -eq 0 ]; then
+  # The below line echoed to stdout is used by Abracadabra, do not change alone!
   echo "Image built in $OUTPUT_FILE"
   if [ -f "$OUTPUT_FILE" ]; then
     echo "to add the image in glance run the following command:"
