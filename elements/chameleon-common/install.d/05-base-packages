@@ -21,6 +21,7 @@ apt-get install -y \
     build-essential \
     byacc \
     bzip2 \
+    collectd \
     cscope \
     ctags \
     diffstat \
@@ -39,27 +40,26 @@ apt-get install -y \
     libgfortran-4.7-dev \
     libguestfs-tools \
     libneon27-dev \
+    libpython2.7 \
     libquadmath0 \
     libstdc++6 \
     libtool \
     patchutils \
     puppet \
-    python-amqp \
-    python-ceilometerclient \
     python-cinderclient \
     python-glanceclient \
+    python-gnocchiclient \
     python-heatclient \
     python-keystoneclient \
     python-neutronclient \
     python-novaclient \
     python-openstackclient \
-    python-psutil \
+    python-setuptools \
     python-swiftclient \
     qemu-utils \
     rcs \
     salt-common \
     subversion \
-    supervisor \
     swig \
     systemtap \
     systemtap-client \
