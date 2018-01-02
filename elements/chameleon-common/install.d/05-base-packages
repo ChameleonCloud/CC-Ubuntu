@@ -13,12 +13,56 @@ apt-get update -y
 # The following command enables to reduce the size of snapshot-images
 echo "libguestfs-tools libguestfs/update-appliance boolean true" | sudo debconf-set-selections
 
-apt-get install -y ansible autoconf automake bison byacc bzip2 cscope ctags \
-diffstat doxygen dwz elfutils flex gdb indent intltool libtool patchutils \
-puppet python-amqp python-ceilometerclient python-cinderclient \
-python-glanceclient python-heatclient python-keystoneclient \
-python-neutronclient python-novaclient python-psutil python-swiftclient rcs \
-subversion supervisor swig systemtap systemtap-client systemtap-runtime unzip \
-libguestfs-tools build-essential qemu-utils g++ gfortran libapr1 libapr1-dev \
-libdwarf-dev libgfortran-4.7-dev libquadmath0 libstdc++6 libneon27-dev \
-systemtap-sdt-dev salt-common python-openstackclient
+apt-get install -y \
+    ansible \
+    autoconf \
+    automake \
+    bison \
+    build-essential \
+    byacc \
+    bzip2 \
+    cscope \
+    ctags \
+    diffstat \
+    doxygen \
+    dwz \
+    elfutils \
+    flex \
+    g++ \
+    gdb \
+    gfortran \
+    indent \
+    intltool \
+    libapr1 \
+    libapr1-dev \
+    libdwarf-dev \
+    libgfortran-4.7-dev \
+    libguestfs-tools \
+    libneon27-dev \
+    libquadmath0 \
+    libstdc++6 \
+    libtool \
+    patchutils \
+    puppet \
+    python-amqp \
+    python-ceilometerclient \
+    python-cinderclient \
+    python-glanceclient \
+    python-heatclient \
+    python-keystoneclient \
+    python-neutronclient \
+    python-novaclient \
+    python-openstackclient \
+    python-psutil \
+    python-swiftclient \
+    qemu-utils \
+    rcs \
+    salt-common \
+    subversion \
+    supervisor \
+    swig \
+    systemtap \
+    systemtap-client \
+    systemtap-runtime \
+    systemtap-sdt-dev \
+    unzip
