@@ -42,12 +42,17 @@ def main():
     version_number = UBUNTU_RELEASES[args.release]
     variant_info = VARIANTS[args.variant]
     image_name = 'CC-Ubuntu{}{}'.format(version_number, variant_info['name-suffix'])
-    env = {
+    env_updates = {
         'UBUNTU_ADJECTIVE': args.release,
         'UBUNTU_VERSION': version_number,
         'IMAGE_NAME': image_name,
-        'EXTRA_ELEMENTS': variant_info['extra-elements']
+        'EXTRA_ELEMENTS': variant_info['extra-elements'],
     }
+    # os.exec*e obliterates current environment (was hiding DIB_CC_PROVENANCE)
+    # so we need to include it, and may as well include it all to match how
+    # CC-CentOS7 does it.
+    env = os.environ.copy()
+    env.update(env_updates)
 
     os.execle('create-image.sh', 'create-image.sh', env)
 
