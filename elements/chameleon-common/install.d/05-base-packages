@@ -6,6 +6,8 @@ fi
 set -eu
 set -o pipefail
 
+SCRIPTDIR=$(dirname $0)
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update -y
@@ -13,56 +15,4 @@ apt-get update -y
 # The following command enables to reduce the size of snapshot-images
 echo "libguestfs-tools libguestfs/update-appliance boolean true" | sudo debconf-set-selections
 
-apt-get install -y \
-    ansible \
-    autoconf \
-    automake \
-    bison \
-    build-essential \
-    byacc \
-    bzip2 \
-    collectd \
-    cscope \
-    ctags \
-    diffstat \
-    doxygen \
-    dwz \
-    elfutils \
-    flex \
-    g++ \
-    gdb \
-    gfortran \
-    indent \
-    intltool \
-    libapr1 \
-    libapr1-dev \
-    libdwarf-dev \
-    libgfortran-4.7-dev \
-    libguestfs-tools \
-    libneon27-dev \
-    libpython2.7 \
-    libquadmath0 \
-    libstdc++6 \
-    libtool \
-    patchutils \
-    puppet \
-    python-cinderclient \
-    python-glanceclient \
-    python-gnocchiclient \
-    python-heatclient \
-    python-keystoneclient \
-    python-neutronclient \
-    python-novaclient \
-    python-openstackclient \
-    python-setuptools \
-    python-swiftclient \
-    qemu-utils \
-    rcs \
-    salt-common \
-    subversion \
-    swig \
-    systemtap \
-    systemtap-client \
-    systemtap-runtime \
-    systemtap-sdt-dev \
-    unzip
+apt-get install -y $(cat ${SCRIPTDIR}/apt-packages-all ${SCRIPTDIR}/apt-packages-${DIB_RELEASE})
