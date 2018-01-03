@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+SCRIPTDIR=$(dirname $0)
+
+CENTOS=centos7 # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/centos7/environment.d/10-centos7-distro-name.bash#L1
+UBUNTU=ubuntu # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L1
+TRUSTY=trusty
+XENIAL=xenial # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L2
+
+if [ $DISTRO_NAME == $CENTOS ]; then
+    yum install -y $(cat ${SCRIPTDIR}/yum-packages)
+
+else if [ $DISTRO_NAME == $UBUNTU ]; then
+    if [ $DIB_RELEASE == $XENIAL ]; then
+        apt install -y $(cat ${SCRIPTDIR}/apt-packages)
+
+    else if [ $DIB_RELEASE == $TRUSTY ]; then
+        echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
+
+    else
+        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY' and '$XENIAL' recognized"
+        exit 1
+    fi
+else
+    echo "Unknown distribution name: '$DISTRO_NAME', only '$CENTOS' and '$UBUNTU' recognized"
+    exit 1
+fi

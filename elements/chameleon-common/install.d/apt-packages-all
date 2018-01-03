@@ -5,7 +5,6 @@ bison
 build-essential
 byacc
 bzip2
-collectd
 cscope
 ctags
 diffstat
@@ -24,7 +23,6 @@ libdwarf-dev
 libgfortran-4.7-dev
 libguestfs-tools
 libneon27-dev
-libpython2.7
 libquadmath0
 libstdc++6
 libtool
@@ -37,7 +35,6 @@ python-keystoneclient
 python-neutronclient
 python-novaclient
 python-openstackclient
-python-setuptools
 python-swiftclient
 qemu-utils
 rcs

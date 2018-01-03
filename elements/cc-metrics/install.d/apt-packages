@@ -1,0 +1,4 @@
+collectd
+libpython2.7
+python-gnocchiclient
+python-setuptools
