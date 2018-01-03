@@ -16,11 +16,11 @@ XENIAL=xenial # https://github.com/openstack/diskimage-builder/blob/be8d9b6/disk
 if [ $DISTRO_NAME == $CENTOS ]; then
     yum install -y $(cat ${SCRIPTDIR}/yum-packages)
 
-else if [ $DISTRO_NAME == $UBUNTU ]; then
+elif [ $DISTRO_NAME == $UBUNTU ]; then
     if [ $DIB_RELEASE == $XENIAL ]; then
         apt install -y $(cat ${SCRIPTDIR}/apt-packages)
 
-    else if [ $DIB_RELEASE == $TRUSTY ]; then
+    elif [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
 
     else

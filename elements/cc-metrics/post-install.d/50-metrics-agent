@@ -18,13 +18,13 @@ if [ $DISTRO_NAME == $CENTOS ]; then
     COLLECTD_GLOBAL_CONF=/etc/collectd.conf
     COLLECTD_PLUGIN_PATH=/usr/lib/python2.7/site-packages/collectd_openstack/
 
-else if [ $DISTRO_NAME == $UBUNTU ]; then
+elif [ $DISTRO_NAME == $UBUNTU ]; then
     if [ $DIB_RELEASE == $XENIAL ]; then
         COLLECTD_CONFD=/etc/collectd/collectd.conf.d
         COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
         COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
 
-    else if [ $DIB_RELEASE == $TRUSTY ]; then
+    elif [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
         exit 0
     else
