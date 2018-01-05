@@ -40,18 +40,23 @@ TMPDIR=`mktemp -d`
 mkdir -p $TMPDIR/common
 OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
 
-
-ELEMENTS="vm"
-if [ "$FORCE_PARTITION_IMAGE" = true ]; then
-  ELEMENTS="baremetal"
-fi
+# ELEMENTS="vm"
+# if [ "$FORCE_PARTITION_IMAGE" = true ]; then
+#   ELEMENTS="baremetal"
+# fi
 
 if [ -f "$OUTPUT_FILE" ]; then
   echo "removing existing $OUTPUT_FILE"
   rm -f "$OUTPUT_FILE"
 fi
 
-disk-image-create chameleon-common cc-metrics $ELEMENTS $EXTRA_ELEMENTS -o $OUTPUT_FILE
+disk-image-create \
+  chameleon-common \
+  cc-dhcp-all-interfaces \
+  cc-metrics \
+  vm \
+  $EXTRA_ELEMENTS \
+  -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
   mv $OUTPUT_FILE.qcow2 $OUTPUT_FILE
