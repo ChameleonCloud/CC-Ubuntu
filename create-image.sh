@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # set -e
-set -ex
+set -o xtrace
+set -o errexit
+set -o nounset
 
 DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 
@@ -18,6 +20,8 @@ DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 #
 # BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
 export DIB_RELEASE="$UBUNTU_ADJECTIVE"
+TRUSTY=trusty
+XENIAL=xenial
 #
 # URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 # if [ ! -f "$BASE_IMAGE" ]; then
@@ -50,11 +54,19 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
+if [ $UBUNTU_ADJECTIVE == $TRUSTY ]; then
+  ELEMENTS=''
+elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
+  ELEMENTS='dhcp-all-interfaces cc-metrics'
+else
+  echo "Unknown Ubuntu release"
+  exit 1
+fi
+
 disk-image-create \
   chameleon-common \
-  cc-dhcp-all-interfaces \
-  cc-metrics \
   vm \
+  $ELEMENTS \
   $EXTRA_ELEMENTS \
   -o $OUTPUT_FILE
 
