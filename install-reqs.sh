@@ -10,11 +10,13 @@ fi
 ### OS-specific installs
 
 function centos_reqs() {
+  yum makecache fast
   yum install -y epel-release
   yum install -y qemu-img python-pip kpartx
 }
 
 function ubuntu_reqs() {
+  apt-get update
   apt-get -qq install -y qemu-utils python-pip kpartx
 }
 
