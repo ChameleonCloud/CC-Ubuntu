@@ -3,3 +3,4 @@ CC-Ubuntu*
 *.qcow2.xz
 *.img
 image.d
+*.log

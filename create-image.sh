@@ -22,6 +22,7 @@ DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 TRUSTY=trusty
 XENIAL=xenial
+BIONIC=bionic
 #
 # URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 # if [ ! -f "$BASE_IMAGE" ]; then
@@ -57,6 +58,8 @@ fi
 if [ $UBUNTU_ADJECTIVE == $TRUSTY ]; then
   ELEMENTS=''
 elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
+  ELEMENTS='dhcp-all-interfaces cc-metrics'
+elif [ $UBUNTU_ADJECTIVE == $BIONIC ]; then
   ELEMENTS='dhcp-all-interfaces cc-metrics'
 else
   echo "Unknown Ubuntu release"

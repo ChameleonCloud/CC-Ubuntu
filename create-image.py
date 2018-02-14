@@ -32,7 +32,7 @@ def main():
     parser.add_argument('-r', '--revision', type=str, default='',
         help='Ignored parameter. Element chooses latest image.')
     parser.add_argument('-n', '--release', type=str, default='xenial',
-        choices=['trusty', 'xenial', 'artful'],
+        choices=UBUNTU_RELEASES,
         help='Ubuntu release adjective name')
     parser.add_argument('variant', type=str,
         help='Image variant to build')
