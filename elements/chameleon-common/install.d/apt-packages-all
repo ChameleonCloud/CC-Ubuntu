@@ -26,6 +26,7 @@ libneon27-dev
 libquadmath0
 libstdc++6
 libtool
+nscd
 patchutils
 puppet
 python-cinderclient
