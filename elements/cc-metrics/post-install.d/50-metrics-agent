@@ -46,8 +46,8 @@ python setup.py install
 #cp ${SCRIPTDIR}/collectd-gnocchi-plugin.conf ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
 sed -e "s;%%PLUGIN_PATH%%;$COLLECTD_PLUGIN_PATH;" ${SCRIPTDIR}/collectd-gnocchi-plugin.conf > ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
 
-# Disable the cpu plugin because it creates a huge number of metrics
-sed -i -e 's/^LoadPlugin cpu/#LoadPlugin cpu/' $COLLECTD_GLOBAL_CONF
+# Sync collectd configuration with CentOS to reduce the number of enabled plugins
+cp ${SCRIPTDIR}/collectd.conf ${COLLECTD_GLOBAL_CONF}
 
 # Enable collectd to start on boot
 systemctl enable collectd
