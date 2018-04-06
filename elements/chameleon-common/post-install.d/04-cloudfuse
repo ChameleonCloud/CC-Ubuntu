@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+# install cloudfuse
+git clone https://github.com/redbo/cloudfuse.git
+cd cloudfuse/
+./configure
+make
+make install
+
+# clean up
+cd ..
+rm -rf cloudfuse
+
+exit 0
