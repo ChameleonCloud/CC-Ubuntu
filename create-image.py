@@ -20,8 +20,14 @@ VARIANTS = {
         'extra-elements': '',
     },
     'gpu': {
-        'name-suffix': '-CUDA8',
-        'extra-elements': 'cc-cuda',
+        'cuda8': {
+            'name-suffix': '-CUDA8',
+            'extra-elements': 'cc-cuda8',
+        },
+        'cuda9': {
+            'name-suffix': '-CUDA9',
+            'extra-elements': 'cc-cuda9',
+        },
     },
 }
 
@@ -34,13 +40,17 @@ def main():
     parser.add_argument('-n', '--release', type=str, default='xenial',
         choices=UBUNTU_RELEASES,
         help='Ubuntu release adjective name')
-    parser.add_argument('variant', type=str,
+    parser.add_argument('-v', '--variant', type=str,
         help='Image variant to build')
+    parser.add_argument('-c', '--cuda-version', type=str, default='cuda9',
+        help='CUDA version to install. Ignore if the variant is not gpu.')
 
     args = parser.parse_args()
 
     version_number = UBUNTU_RELEASES[args.release]
     variant_info = VARIANTS[args.variant]
+    if args.variant == 'gpu':
+        variant_info = variant_info[args.cuda_version]
     image_name = 'CC-Ubuntu{}{}'.format(version_number, variant_info['name-suffix'])
     env_updates = {
         'UBUNTU_ADJECTIVE': args.release,
