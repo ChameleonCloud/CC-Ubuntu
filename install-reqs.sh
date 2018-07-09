@@ -12,12 +12,12 @@ fi
 function centos_reqs() {
   yum makecache fast
   yum install -y epel-release
-  yum install -y qemu-img python-pip kpartx
+  yum install -y qemu-img python-pip kpartx uboot-tools
 }
 
 function ubuntu_reqs() {
   apt-get update
-  apt-get -qq install -y qemu-utils python-pip kpartx
+  apt-get -qq install -y qemu-utils python-pip kpartx u-boot-tools
 }
 
 source /etc/os-release

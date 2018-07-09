@@ -29,6 +29,10 @@ VARIANTS = {
             'extra-elements': 'cc-cuda9',
         },
     },
+    'arm64': {
+        'name-suffix': 'ARM64',
+        'extra-elements': 'block-device-efi cc-uboot',
+    },
 }
 
 
@@ -41,6 +45,7 @@ def main():
         choices=UBUNTU_RELEASES,
         help='Ubuntu release adjective name')
     parser.add_argument('-v', '--variant', type=str,
+        choices=VARIANTS,
         help='Image variant to build')
     parser.add_argument('-c', '--cuda-version', type=str, default='cuda9',
         help='CUDA version to install. Ignore if the variant is not gpu.')

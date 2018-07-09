@@ -23,6 +23,9 @@ For this image, the current supported variants are:
 * `base`: General Ubuntu image
 * `gpu`: includes CUDA 8 driver, only supported with 16.04 Xenial.
   * *Needs to be built from another Ubuntu image with the **same kernel*** as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
+* `arm64`: Creates post-processed kernel and ramdisk, and bootscript for U-Boot
+  * Can only be built on an ARM64 node, currently
+  * When building Ubuntu 16.04 "Xenial", the running environment must include `FLASH_KERNEL_SKIP=true`
 
 The `.py` script does some parameter parsing, configures then environment, then
 `exec`'s the `.sh` script. Calling the `.sh` directly requires a few envvars
