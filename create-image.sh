@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e
+set -e
 set -o xtrace
 set -o errexit
 set -o nounset
@@ -45,10 +45,16 @@ TMPDIR=`mktemp -d`
 mkdir -p $TMPDIR/common
 OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
 
-# ELEMENTS="vm"
-# if [ "$FORCE_PARTITION_IMAGE" = true ]; then
-#   ELEMENTS="baremetal"
-# fi
+ELEMENTS="vm"
+#if [ "$FORCE_PARTITION_IMAGE" = true ]; then
+#  ELEMENTS="baremetal"
+#fi
+
+# Don't use "vm" element, to avoid "bootloader" and "block-device-efi" elements for ARM64
+if [ "$VARIANT" = 'arm64' ]; then
+  ELEMENTS=""
+  export FLASH_KERNEL_SKIP=true
+fi
 
 if [ -f "$OUTPUT_FILE" ]; then
   echo "removing existing $OUTPUT_FILE"
@@ -56,11 +62,11 @@ if [ -f "$OUTPUT_FILE" ]; then
 fi
 
 if [ $UBUNTU_ADJECTIVE == $TRUSTY ]; then
-  ELEMENTS=''
+  ELEMENTS="$ELEMENTS"
 elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
-  ELEMENTS='dhcp-all-interfaces cc-metrics'
+  ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
 elif [ $UBUNTU_ADJECTIVE == $BIONIC ]; then
-  ELEMENTS='dhcp-all-interfaces cc-metrics'
+  ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
 else
   echo "Unknown Ubuntu release"
   exit 1
@@ -68,7 +74,6 @@ fi
 
 disk-image-create \
   chameleon-common \
-  vm \
   $ELEMENTS \
   $EXTRA_ELEMENTS \
   -o $OUTPUT_FILE

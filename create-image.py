@@ -30,8 +30,8 @@ VARIANTS = {
         },
     },
     'arm64': {
-        'name-suffix': 'ARM64',
-        'extra-elements': 'block-device-efi cc-uboot',
+        'name-suffix': '-ARM64',
+        'extra-elements': 'block-device-uboot cc-uboot',
     },
 }
 
@@ -62,6 +62,7 @@ def main():
         'UBUNTU_VERSION': version_number,
         'IMAGE_NAME': image_name,
         'EXTRA_ELEMENTS': variant_info['extra-elements'],
+	'VARIANT': args.variant,
     }
     # os.exec*e obliterates current environment (was hiding DIB_CC_PROVENANCE)
     # so we need to include it, and may as well include it all to match how
