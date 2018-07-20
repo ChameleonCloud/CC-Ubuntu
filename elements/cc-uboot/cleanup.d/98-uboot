@@ -9,9 +9,9 @@ set -o pipefail
 function post_process()
 {
     mkimage -A $1 -O linux -T kernel -C none -a $UBOOT_KERNEL_ADDR -e $UBOOT_KERNEL_EP -n "Kernel" -d $KERNEL uImage
-    mv uImage $KERNEL
+    mv uImage $TARGET_ROOT/boot
     mkimage -A $1 -O linux -T ramdisk -a 0 -n "RAMdisk" -C gzip -d $RAMDISK uInitrd
-    mv uInitrd $RAMDISK
+    mv uInitrd $TARGET_ROOT/boot
 }
 
 function bootscript()
@@ -23,8 +23,8 @@ printenv kernel_addr_r
 printenv ramdisk_addr_r
 printenv fdt_addr_r
 
-ext4load scsi 0:1 \${kernel_addr_r} ${KERNEL##*$TARGET_ROOT}
-ext4load scsi 0:1 \${ramdisk_addr_r} ${RAMDISK##*$TARGET_ROOT}
+ext4load scsi 0:1 \${kernel_addr_r} /boot/uImage
+ext4load scsi 0:1 \${ramdisk_addr_r} /boot/uInitrd
 bootm \${kernel_addr_r} \${ramdisk_addr_r} \${fdt_addr_r}
 EOL
 
