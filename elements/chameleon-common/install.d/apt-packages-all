@@ -22,7 +22,6 @@ libapr1-dev
 libcurl4-openssl-dev
 libdwarf-dev
 libfuse-dev
-libgfortran-4.7-dev
 libguestfs-tools
 libjson-c-dev
 libneon27-dev

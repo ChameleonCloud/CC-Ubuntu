@@ -12,6 +12,7 @@ CENTOS=centos7 # https://github.com/openstack/diskimage-builder/blob/be8d9b6/dis
 UBUNTU=ubuntu # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L1
 TRUSTY=trusty
 XENIAL=xenial # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L2
+BIONIC=bionic
 
 if [ $DISTRO_NAME == $CENTOS ]; then
     COLLECTD_CONFD=/etc/collectd.d/
@@ -24,11 +25,16 @@ elif [ $DISTRO_NAME == $UBUNTU ]; then
         COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
         COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
 
+    elif [ $DIB_RELEASE == $BIONIC ]; then
+        COLLECTD_CONFD=/etc/collectd/collectd.conf.d
+        COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
+        COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
+
     elif [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
         exit 0
     else
-        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY' and '$XENIAL' recognized"
+        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY', '$XENIAL' and '$BIONIC' recognized"
         exit 1
     fi
 else

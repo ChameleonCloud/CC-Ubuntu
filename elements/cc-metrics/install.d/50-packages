@@ -12,6 +12,7 @@ CENTOS=centos7 # https://github.com/openstack/diskimage-builder/blob/be8d9b6/dis
 UBUNTU=ubuntu # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L1
 TRUSTY=trusty
 XENIAL=xenial # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L2
+BIONIC=bionic
 
 if [ $DISTRO_NAME == $CENTOS ]; then
     yum install -y $(cat ${SCRIPTDIR}/yum-packages)
@@ -20,11 +21,14 @@ elif [ $DISTRO_NAME == $UBUNTU ]; then
     if [ $DIB_RELEASE == $XENIAL ]; then
         apt install -y $(cat ${SCRIPTDIR}/apt-packages)
 
+    elif [ $DIB_RELEASE == $BIONIC ]; then
+        apt install -y $(cat ${SCRIPTDIR}/apt-packages)
+
     elif [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
 
     else
-        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY' and '$XENIAL' recognized"
+        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY', '$XENIAL' and '$BIONIC' recognized"
         exit 1
     fi
 else
