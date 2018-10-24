@@ -49,6 +49,7 @@ def main():
         help='Image variant to build')
     parser.add_argument('-c', '--cuda-version', type=str, default='cuda9',
         help='CUDA version to install. Ignore if the variant is not gpu.')
+    parser.add_argument('-g', '--region', type=str, help='Region name')
 
     args = parser.parse_args()
 
