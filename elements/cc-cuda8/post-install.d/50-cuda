@@ -61,4 +61,19 @@ rm -rf $NVIDIA_TMP_FOLDER
 # Remove the CUDA Installer
 rm -f cuda_8.0.61_375.26_linux.run
 
+#############################################################
+# Metrics
+#############################################################
+
+cd /opt/chameleon
+git clone https://github.com/ChameleonCloud/collectd-cuda.git
+chmod 777 -R collectd-cuda/
+
+cat > /etc/collectd/collectd.conf.d/collectd-cuda.conf <<EOF
+LoadPlugin exec
+<Plugin exec>
+    Exec "cc" "/opt/chameleon/collectd-cuda/collectd_cuda.sh"
+</Plugin>
+EOF
+
 exit 0
