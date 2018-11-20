@@ -17,15 +17,15 @@ export TMPDIR=$NVIDIA_TMP_FOLDER
 # Mandatory Actions
 cat > '/etc/profile.d/cuda.sh' <<- EOM
 #!/bin/sh
-export PATH=/usr/local/cuda-9.1/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64
+export PATH=/usr/local/cuda-9.2/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-9.2/lib64
 EOM
 chmod +x /etc/profile.d/cuda.sh
-echo '/usr/local/cuda-9.1/lib64' > /etc/ld.so.conf.d/nvidia-x86_64.conf
+echo '/usr/local/cuda-9.2/lib64' > /etc/ld.so.conf.d/nvidia-x86_64.conf
 ldconfig
 
 # Compile deviceQuery sample (useful for testing)
-DEVICE_QUERY_PATH="/usr/local/cuda-9.1/samples/1_Utilities/deviceQuery"
+DEVICE_QUERY_PATH="/usr/local/cuda-9.2/samples/1_Utilities/deviceQuery"
 source /etc/environment
 pushd $DEVICE_QUERY_PATH
 make
@@ -59,11 +59,9 @@ chmod +x /etc/rc.local
 rm -rf $NVIDIA_TMP_FOLDER
 
 # Remove the CUDA Installer
-rm -f cuda_9.1.85_387.26_linux.run
+rm -f cuda_9.2.148_396.37_linux.run
 #Remove the patches
-rm -f cuda_9.1.85.1_linux.run
-rm -f cuda_9.1.85.2_linux.run
-rm -f cuda_9.1.85.3_linux.run
+rm -f cuda_9.2.148.1_linux.run
 
 #############################################################
 # Metrics
