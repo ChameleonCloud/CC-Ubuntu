@@ -69,6 +69,8 @@ rm -f cuda_9.1.85.3_linux.run
 # Metrics
 #############################################################
 
+mkdir -p /opt/chameleon
+
 cd /opt/chameleon
 git clone https://github.com/ChameleonCloud/collectd-cuda.git
 chmod 777 -R collectd-cuda/
