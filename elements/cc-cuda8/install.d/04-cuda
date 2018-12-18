@@ -14,6 +14,14 @@ export TMPDIR=$NVIDIA_TMP_FOLDER
 # Installation (runfile)
 #############################################################
 
+# compare chroot kernel with running kernel
+CHROOT_KERNEL=$(basename $(ls -td -- /lib/modules/*/ | head -n 1))
+RUNNING_KERNEL=$(uname -r)
+if [ "$CHROOT_KERNEL" != "$RUNNING_KERNEL" ]; then
+	echo "Unmatched kernel!"
+	exit 1	
+fi
+
 # Install kernel headers and wget
 sudo apt-get -qq install -y build-essential linux-headers-$(uname -r) wget
 
