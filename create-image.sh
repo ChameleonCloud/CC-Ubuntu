@@ -38,8 +38,21 @@ BIONIC=bionic
 # fi
 #
 # export DIB_LOCAL_IMAGE=`pwd`/$BASE_IMAGE
+
+#Clone the required repositories for Heat contextualization elements
+if [ ! -d tripleo-image-elements ]; then
+  git clone https://git.openstack.org/openstack/tripleo-image-elements.git
+fi
+if [ ! -d heat-agents ]; then
+  git clone https://git.openstack.org/openstack/heat-agents.git
+fi
+
 export ELEMENTS_PATH=$DIR/elements
 export LIBGUESTFS_BACKEND=direct
+#required by disk-image-builder for heat
+export ELEMENTS_PATH='elements:tripleo-image-elements/elements:heat-agents'
+export DEPLOYMENT_BASE_ELEMENTS="heat-config heat-config-script"
+export AGENT_ELEMENTS="os-collect-config os-refresh-config os-apply-config"
 
 TMPDIR=`mktemp -d`
 mkdir -p $TMPDIR/common
@@ -76,6 +89,8 @@ disk-image-create \
   chameleon-common \
   $ELEMENTS \
   $EXTRA_ELEMENTS \
+  $AGENT_ELEMENTS \
+  $DEPLOYMENT_BASE_ELEMENTS \
   -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
