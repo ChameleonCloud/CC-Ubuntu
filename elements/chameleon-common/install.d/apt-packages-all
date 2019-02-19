@@ -33,6 +33,7 @@ libxml2-dev
 nscd
 patchutils
 puppet
+python-pip
 python-cinderclient
 python-glanceclient
 python-heatclient
