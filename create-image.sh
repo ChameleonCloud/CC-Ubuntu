@@ -53,7 +53,8 @@ export LIBGUESTFS_BACKEND=direct
 export ELEMENTS_PATH='elements:tripleo-image-elements/elements:heat-agents'
 export DEPLOYMENT_BASE_ELEMENTS="heat-config heat-config-script"
 export AGENT_ELEMENTS="os-collect-config os-refresh-config os-apply-config"
-#required by heat-agents because of a conflict with pip versions during the heat install.  
+#install pip and virtualenv from distribution because of a conflict between pip version and PyYAML
+#ref: https://stackoverflow.com/questions/49911550/how-to-upgrade-disutils-package-pyyaml
 export DIB_INSTALLTYPE_pip_and_virtualenv=package
 
 TMPDIR=`mktemp -d`
@@ -80,6 +81,9 @@ if [ $UBUNTU_ADJECTIVE == $TRUSTY ]; then
   ELEMENTS="$ELEMENTS"
 elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
   ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
+  if [ "$VARIANT" != 'arm64' ]; then
+    ELEMENTS="$ELEMENTS $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
+  fi
 elif [ $UBUNTU_ADJECTIVE == $BIONIC ]; then
   ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
 else
@@ -91,8 +95,6 @@ disk-image-create \
   chameleon-common \
   $ELEMENTS \
   $EXTRA_ELEMENTS \
-  $AGENT_ELEMENTS \
-  $DEPLOYMENT_BASE_ELEMENTS \
   -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then
