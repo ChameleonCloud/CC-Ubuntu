@@ -28,6 +28,10 @@ VARIANTS = {
             'name-suffix': '-CUDA9',
             'extra-elements': 'cc-cuda9',
         },
+        'cuda10': {
+            'name-suffix': '-CUDA10',
+            'extra-elements': 'cc-cuda10',
+        },
     },
     'arm64': {
         'name-suffix': '-ARM64',

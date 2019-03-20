@@ -26,15 +26,9 @@ fi
 sudo apt-get -qq install -y build-essential linux-headers-$(uname -r) wget
 
 # Get the NVIDIA CUDA Toolkit for Ubuntu 16
-wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
-mv cuda_8.0.61_375.26_linux-run cuda_8.0.61_375.26_linux.run
-wget -nv https://developer.nvidia.com/compute/cuda/8.0/Prod2/patches/2/cuda_8.0.61.2_linux-run
-mv cuda_8.0.61.2_linux-run cuda_8.0.61.2_linux.run
+wget -nv https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.168_418.67_linux.run
 
 # Install the NVIDIA CUDA Toolkit for Ubuntu 16
-sudo sh cuda_8.0.61_375.26_linux.run --samples --toolkit --driver --silent --verbose --tmpdir $NVIDIA_TMP_FOLDER
-
-# Install patches
-sudo sh cuda_8.0.61.2_linux.run --silent --accept-eula
+sudo sh cuda_10.1.168_418.67_linux.run --samples --toolkit --driver --silent --tmpdir $NVIDIA_TMP_FOLDER
 
 exit 0
