@@ -1,1 +1,1 @@
-Provides CUDA 9.1 for Ubuntu.
+Provides CUDA 9.2 for Ubuntu.

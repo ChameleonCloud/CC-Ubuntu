@@ -91,9 +91,19 @@ else
   exit 1
 fi
 
+SITE_ELEMENTS=""
+if $KVM; then
+  echo "kvm image"
+  SITE_ELEMENTS=""
+else
+  echo "chi image"
+  SITE_ELEMENTS="chi"
+fi
+
 disk-image-create \
   chameleon-common \
   $ELEMENTS \
+  $SITE_ELEMENTS \
   $EXTRA_ELEMENTS \
   -o $OUTPUT_FILE
 
