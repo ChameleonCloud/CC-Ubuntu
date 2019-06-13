@@ -34,14 +34,7 @@ nscd
 patchutils
 puppet
 python-pip
-python-cinderclient
-python-glanceclient
-python-heatclient
-python-keystoneclient
-python-neutronclient
-python-novaclient
-python-openstackclient
-python-swiftclient
+python-setuptools
 qemu-utils
 rcs
 salt-common

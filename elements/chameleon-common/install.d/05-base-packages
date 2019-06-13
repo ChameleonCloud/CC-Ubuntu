@@ -16,5 +16,5 @@ apt-get update -y
 echo "libguestfs-tools libguestfs/update-appliance boolean true" | sudo debconf-set-selections
 
 apt-get install -y $(cat ${SCRIPTDIR}/apt-packages-all ${SCRIPTDIR}/apt-packages-${DIB_RELEASE})
-#added to insure the virtualenv is installed
-pip install virtualenv
+
+pip install -r ${SCRIPTDIR}/requirements.txt
