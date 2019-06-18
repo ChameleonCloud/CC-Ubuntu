@@ -21,6 +21,7 @@ libapr1
 libapr1-dev
 libcurl4-openssl-dev
 libdwarf-dev
+libffi-dev
 libfuse-dev
 libgfortran-4.7-dev
 libguestfs-tools
@@ -33,6 +34,7 @@ libxml2-dev
 nscd
 patchutils
 puppet
+python-dev
 python-pip
 python-setuptools
 qemu-utils
