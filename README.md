@@ -1,7 +1,7 @@
-# CC-Ubuntu16.04 (and 14.04)
+# CC-Ubuntu16.04
 
 This directory contains the scripts used to generate the Chameleon KVM and
-bare-metal Ubuntu images. It relies on diskimage-builder.
+bare-metal Ubuntu image, including Ubuntu14.04, Ubuntu16.04, and Ubuntu18.04. It relies on diskimage-builder.
 
 ## Requirements
 
