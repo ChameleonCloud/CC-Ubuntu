@@ -19,3 +19,7 @@ apt-get install -y $(cat ${SCRIPTDIR}/apt-packages-all ${SCRIPTDIR}/apt-packages
 
 pip install setuptools --upgrade
 pip install -r ${SCRIPTDIR}/requirements.txt
+
+# python package more-itertools >= 6.0.0 dropped support for python 2
+# ref: https://github.com/erikrose/more-itertools/issues/272
+pip install --upgrade "more-itertools<6.0.0"
