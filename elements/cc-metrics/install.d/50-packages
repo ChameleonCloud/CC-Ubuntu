@@ -18,19 +18,8 @@ if [ $DISTRO_NAME == $CENTOS ]; then
     yum install -y $(cat ${SCRIPTDIR}/yum-packages)
 
 elif [ $DISTRO_NAME == $UBUNTU ]; then
-    if [ $DIB_RELEASE == $XENIAL ]; then
-        apt install -y $(cat ${SCRIPTDIR}/apt-packages)
-
-    elif [ $DIB_RELEASE == $TRUSTY ]; then
-        echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
-        
-    elif [ $DIB_RELEASE == $BIONIC ]; then
-        apt install -y $(cat ${SCRIPTDIR}/apt-packages)
-
-    else
-        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY', '$XENIAL' and '$BIONIC' recognized"
-        exit 1
-    fi
+    apt install -y $(cat ${SCRIPTDIR}/apt-metric-packages)
+    apt install -y $(cat ${SCRIPTDIR}/apt-metric-packages-${DIB_RELEASE})
 else
     echo "Unknown distribution name: '$DISTRO_NAME', only '$CENTOS' and '$UBUNTU' recognized"
     exit 1

@@ -23,7 +23,7 @@ elif [ $DISTRO_NAME == $UBUNTU ]; then
     if [ $DIB_RELEASE == $XENIAL ]; then
         COLLECTD_CONFD=/etc/collectd/collectd.conf.d
         COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
-        COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
+        COLLECTD_PLUGIN_PATH=/usr/local/lib/python3.5/dist-packages/collectd_openstack
 
     elif [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
@@ -32,7 +32,7 @@ elif [ $DISTRO_NAME == $UBUNTU ]; then
     elif [ $DIB_RELEASE == $BIONIC ]; then
         COLLECTD_CONFD=/etc/collectd/collectd.conf.d
         COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
-        COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
+        COLLECTD_PLUGIN_PATH=/usr/local/lib/python3.6/dist-packages/collectd_openstack
         
     else
         echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY', '$XENIAL' and '$BIONIC' recognized"

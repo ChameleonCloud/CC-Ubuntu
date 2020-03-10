@@ -23,6 +23,9 @@ export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 TRUSTY=trusty
 XENIAL=xenial
 BIONIC=bionic
+
+export DIB_PYTHON_VERSION=3
+
 #
 # URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
 # if [ ! -f "$BASE_IMAGE" ]; then

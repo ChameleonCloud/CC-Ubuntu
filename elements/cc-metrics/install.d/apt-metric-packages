@@ -1,2 +1,3 @@
 collectd
 python3-gnocchiclient
+python3-setuptools
