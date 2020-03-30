@@ -24,3 +24,8 @@ else
     echo "Unknown distribution name: '$DISTRO_NAME', only '$CENTOS' and '$UBUNTU' recognized"
     exit 1
 fi
+
+wget https://bootstrap.pypa.io/get-pip.py
+python2 get-pip.py
+pip2 install --ignore-installed PyYAML
+pip2 install gnocchi
