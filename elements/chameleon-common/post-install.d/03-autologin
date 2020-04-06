@@ -18,7 +18,7 @@ ExecStart=-/sbin/agetty --keep-baud 115200,38400,9600 --autologin cc --noclear %
 EOF
 
 # virtual console
-mkdir /etc/systemd/system/getty@tty1.service.d/override.conf
+mkdir /etc/systemd/system/getty@tty1.service.d
 cat << EOF > /etc/systemd/system/getty@tty1.service.d/override.conf
 [Service]
 ExecStart=
