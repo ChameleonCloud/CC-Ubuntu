@@ -28,4 +28,4 @@ fi
 wget https://bootstrap.pypa.io/get-pip.py
 python2 get-pip.py
 pip2 install --ignore-installed PyYAML
-pip2 install gnocchi
+pip2 install gnocchiclient
