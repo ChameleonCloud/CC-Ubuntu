@@ -25,7 +25,7 @@ else
     exit 1
 fi
 
-wget https://bootstrap.pypa.io/get-pip.py
-python2 get-pip.py
-pip2 install --ignore-installed PyYAML
-pip2 install gnocchiclient
+#wget https://bootstrap.pypa.io/get-pip.py
+#python2 get-pip.py
+#pip2 install --ignore-installed PyYAML
+pip3 install gnocchiclient
