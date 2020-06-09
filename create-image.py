@@ -37,6 +37,10 @@ VARIANTS = {
         'name-suffix': '-ARM64',
         'extra-elements': 'block-device-uboot cc-uboot',
     },
+    'sage': {
+        'name-suffix': '-SAGE',
+        'extra-elements': 'virtual-waggle',
+    }
 }
 
 
@@ -54,7 +58,7 @@ def main():
     parser.add_argument('-c', '--cuda-version', type=str, default='cuda9',
         help='CUDA version to install. Ignore if the variant is not gpu.')
     parser.add_argument('-g', '--region', type=str, help='Region name')
-    parser.add_argument('-k', '--kvm', action='store_true', help='Present if build image for KVM site') 
+    parser.add_argument('-k', '--kvm', action='store_true', help='Present if build image for KVM site')
 
     args = parser.parse_args()
 
