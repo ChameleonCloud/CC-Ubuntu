@@ -13,74 +13,10 @@ cd /opt/virtual-waggle
 
 git clone https://github.com/waggle-sensor/waggle-node.git .
 
-rm .env
-
-echo "VW_ROOT=/opt/virtual-waggle" >> /etc/environment
-echo "WAGGLE_ETC_ROOT=/opt/virtual-waggle/private" >> /etc/environment
-
 cat > /usr/local/sbin/virtual-waggle  <<EOF
-#!/bin/bash -e
-
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    echo "Not running as root"
-    exit 1
-fi
-
-# use waggle node environment
-set -a
-source \$VW_ROOT/waggle-node.env
-set +a
-
-# use docker-compose.plugins.yml if it exists
-if [ -e 'docker-compose.plugins.yml' ]; then
-    compose_file_args='-f '"\$VW_ROOT"'/docker-compose.yml -f '"\$VW_ROOT"'/docker-compose.plugins.yml'
-else
-    compose_file_args='-f '"\$VW_ROOT"'/docker-compose.yml'
-fi
-
-command_up() {
-    docker-compose \$compose_file_args pull
-    docker-compose \$compose_file_args up --build -d --remove-orphans
-}
-
-cleanup_files() {
-    cd \$VW_ROOT
-    for path in \$*; do
-        if [ -e "\$path" ]; then
-            echo "Clean up \$path"
-            rm \$path
-        fi
-    done
-
-    cd \$HOME
-}
-
-command_down() {
-    docker-compose \$compose_file_args down --remove-orphans
-    cleanup_files "\$VW_ROOT/docker-compose.plugins.yml" \
-                  "\$VW_ROOT/private/cacert.pem" \
-                  "\$VW_ROOT/private/cert.pem" \
-                  "\$VW_ROOT/private/key.pem" \
-                  "\$VW_ROOT/private/reverse_ssh_port"
-}
-
-command_logs() {
-    docker-compose \$compose_file_args logs --tail 100 -f
-}
-
-command_schedule() {
-    python3 \$VW_ROOT/utils/set-node-plugins.py \$@
-}
-
-command="\$1"
-shift
-
-case "\$command" in
-    up) command_up \$@ ;;
-    down) command_down \$@ ;;
-    logs) command_logs \$@ ;;
-    schedule) command_schedule \$@ ;;
-esac
+#!/bin/bash
+cd /opt/virtual-waggle
+./waggle-node \$*
 EOF
 
 chmod +x /usr/local/sbin/virtual-waggle
