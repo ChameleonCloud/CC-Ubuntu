@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ \${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+mkdir -p /opt/beehive-repo
+
+cd /opt/beehive-repo
+
+git clone https://github.com/waggle-sensor/beehive-server.git .
+
+echo "BEEHIVE_ROOT=/opt/beehive-server" >> /etc/environment
+
+cat > /usr/local/sbin/beehive-server  <<EOF
+#!/bin/bash
+cd /opt/beehive-repo
+./do.sh \$*
+EOF
+
+chmod +x /usr/local/sbin/beehive-server

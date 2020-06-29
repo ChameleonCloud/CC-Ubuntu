@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ \${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+mkdir -p /opt/virtual-waggle
+mkdir -p /opt/virtal-waggle/private
+
+cd /opt/virtual-waggle
+
+git clone https://github.com/waggle-sensor/waggle-node.git .
+
+cat > /usr/local/sbin/virtual-waggle  <<EOF
+#!/bin/bash
+cd /opt/virtual-waggle
+./waggle-node \$*
+EOF
+
+chmod +x /usr/local/sbin/virtual-waggle
