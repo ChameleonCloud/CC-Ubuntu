@@ -66,7 +66,7 @@ def main():
     variant_info = VARIANTS[args.variant]
     if args.variant == 'gpu':
         variant_info = variant_info[args.cuda_version]
-    image_name = 'CC-Ubuntu{}{}'.format(version_number, variant_info['name-suffix'])
+    image_name = 'Sage{}{}'.format(version_number, variant_info['name-suffix'])
     env_updates = {
         'UBUNTU_ADJECTIVE': args.release,
         'UBUNTU_VERSION': version_number,
