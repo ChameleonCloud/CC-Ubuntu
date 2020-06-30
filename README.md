@@ -48,3 +48,64 @@ Cloned/run by Jenkins with https://github.com/ChameleonCloud/abracadabra
 
 If the script is run by Abracadabra, it looks for the magic line "Image built
 in (path)", so don't change that (without changing the other).
+
+## Sage Users
+Follow these steps in order to create a Chameleon instance that can be configured with a Chameleon-Sage-Image and with a Docker group that allows a user cc to run Docker command without ```sudo``` priveledges.
+Create an instance on Chameleon using the 18.04 Ubuntu Image.
+Link to Chameleon: http://chi.uc.chameleoncloud.org/
+
+ssh into Chemeleon instance:```ssh -i ~/.ssh/private_key cc@public_floating_ip ```
+
+NOTE: If you recieve the following error: ```cc@public_floating_ip Permission denied (publickey).``` Be sure to check that you are using the correct private key that matches the pulbic key used in your Chameleon key pair. Or delete the pulbic floating ip from the ``` ~/.ssh/known_hosts ``` and try it again
+
+Obtain openrc file from Chameleon and put a copy into Chameleon instance
+
+This command will create a copy of OpenStackRc file onto the Chameleon instance.
+```
+scp -i ~/.ssh/private_key "path to openrc.sh" cc@public_floating_ip:/home/cc
+```
+
+Set RC file as source
+```
+source /path/to/rc_file
+```
+
+Install the requirements for the image building process.
+```
+sudo ./install-reqs.sh
+```
+
+Then make sure you are on the Sage branch
+```
+git fetch && git checkout sage;
+```
+
+Then run create-image.py
+```
+python create-image.py --release bionic --variant sage --region CHI@UC
+```
+After running this command, you must upload the image created to the OpenStack infrastructure
+```
+glance image-create --name "CC-Ubuntu18.04-SAGE"
+```
+
+
+##### Creating Docker group with a user cc that can run Docker commands without ```sudo```
+
+Add the following code to ```~/Chameleon-Sage-Image-Builder/elements/virtual_waggle/post-instal.d/00-docker```
+
+```
+sudo groupadd docker
+sudo usermod -aG docker cc
+newgrp docker
+
+```
+
+NOTE: If you recieve an error similar to ``` ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
+If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.```
+
+run
+```
+sudo chmod 666 /var/run/docker.sock
+
+```
