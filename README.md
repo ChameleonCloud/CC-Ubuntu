@@ -50,17 +50,28 @@ If the script is run by Abracadabra, it looks for the magic line "Image built
 in (path)", so don't change that (without changing the other).
 
 ## Sage Users
-Follow these steps in order to create a Chameleon instance that can be configured with a Chameleon-Sage-Image and with a Docker group that allows a user cc to run Docker command without ```sudo``` priveledges.
+Follow these steps in order to create a Chameleon instance that can be configured with a Chameleon-Sage-Image and with a Docker group that allows a user cc to run Docker commands without ```sudo``` .
 Create an instance on Chameleon using the 18.04 Ubuntu Image.
 Link to Chameleon: http://chi.uc.chameleoncloud.org/
+
+For the sake of this process also create a private and public key on your local machine. Import the public key to create the key pair for the Chameleon instance.
+
+To create public and private ssh key
+```
+cd ~/.ssh/
+ssh-keygen
+cat ~/.ssh/id_rsa.pub | pbcopy
+```
+
+```cat ~/.ssh/id_rsa.pub | pbcopy``` will save a copy public key to your dashboard, which can then be pasted to Chameleon.
 
 ssh into Chemeleon instance:```ssh -i ~/.ssh/private_key cc@public_floating_ip ```
 
 NOTE: If you recieve the following error: ```cc@public_floating_ip Permission denied (publickey).``` Be sure to check that you are using the correct private key that matches the pulbic key used in your Chameleon key pair. Or delete the pulbic floating ip from the ``` ~/.ssh/known_hosts ``` and try it again
 
-Obtain openrc file from Chameleon and put a copy into Chameleon instance
+Obtain OpenStack RC File from Chameleon and put a copy into Chameleon instance.
 
-This command will create a copy of OpenStackRc file onto the Chameleon instance.
+This command will create a copy of OpenStack Rc file from your local machine onto the Chameleon instance.
 ```
 scp -i ~/.ssh/private_key "path to openrc.sh" cc@public_floating_ip:/home/cc
 ```
@@ -101,7 +112,7 @@ newgrp docker
 
 ```
 
-NOTE: If you recieve an error similar to ``` ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
+NOTE: If you receive an error similar to ``` ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
 If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.```
 
 run
