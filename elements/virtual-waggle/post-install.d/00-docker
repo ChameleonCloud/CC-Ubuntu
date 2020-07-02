@@ -8,3 +8,9 @@ set -o pipefail
 
 systemctl start docker
 systemctl enable docker
+
+
+sudo groupadd docker
+sudo usermod -aG docker cc
+newgrp docker
+sudo chmod 666 /var/run/docker.sock
