@@ -38,7 +38,7 @@ VARIANTS = {
         'extra-elements': 'block-device-uboot cc-uboot',
     },
     'sage': {
-        'name-suffix': '-SAGE',
+        'name-suffix': '-VIRTUAL-WAGGLE',
         'extra-elements': 'virtual-waggle',
     }
 }
