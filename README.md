@@ -50,7 +50,8 @@ If the script is run by Abracadabra, it looks for the magic line "Image built
 in (path)", so don't change that (without changing the other).
 
 ## Sage Users
-Follow these steps in order to create a Chameleon instance that can be configured with a Chameleon-Sage-Image and with a Docker group that allows a user cc to run Docker commands without ```sudo``` .
+Follow these steps in order to create an image to use on a Chameleon instance This image will contain a Docker group that allows a user cc to run Docker commands without ```sudo``` .
+
 Create an instance on Chameleon using the 18.04 Ubuntu Image.
 Link to Chameleon: http://chi.uc.chameleoncloud.org/
 
@@ -73,7 +74,7 @@ Obtain OpenStack RC File from Chameleon and put a copy into Chameleon instance.
 
 This command will create a copy of OpenStack Rc file from your local machine onto the Chameleon instance.
 ```
-scp -i ~/.ssh/private_key "path to openrc.sh" cc@public_floating_ip:/home/cc
+scp -i ~/.ssh/private_key /path/to/openrc.sh cc@public_floating_ip:/home/cc
 ```
 
 Set RC file as source
@@ -98,25 +99,3 @@ python create-image.py --release bionic --variant sage --region CHI@UC
 After running this command, you must upload the image created to the OpenStack infrastructure
 ```
 glance image-create --name "CC-Ubuntu18.04-SAGE"
-```
-
-
-##### Creating Docker group with a user cc that can run Docker commands without ```sudo```
-
-Add the following code to ```~/Chameleon-Sage-Image-Builder/elements/virtual_waggle/post-instal.d/00-docker```
-
-```
-sudo groupadd docker
-sudo usermod -aG docker cc
-newgrp docker
-
-```
-
-NOTE: If you receive an error similar to ``` ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
-If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.```
-
-run
-```
-sudo chmod 666 /var/run/docker.sock
-
-```
