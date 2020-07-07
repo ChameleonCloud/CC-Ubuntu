@@ -98,4 +98,4 @@ python create-image.py --release bionic --variant sage --region CHI@UC
 ```
 After running this command, you must upload the image created to the OpenStack infrastructure
 ```
-glance image-create --name "CC-Ubuntu18.04-SAGE"
+glance image-create --name "Sage-VIRTUAL-WAGGLE" --disk-format qcow2 --container-format bare --file /tmp/tmp.R0Ko9o7lBc/common/Sage18.04-VIRTUAL-WAGGLE.qcow2
