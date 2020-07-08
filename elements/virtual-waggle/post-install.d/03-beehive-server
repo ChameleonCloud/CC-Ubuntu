@@ -21,3 +21,7 @@ cd /opt/beehive-repo
 EOF
 
 chmod +x /usr/local/sbin/beehive-server
+
+chmod -R 777 /opt/beehive-repo
+mkdir -p /opt/beehive-server
+chmod -R 777 /opt/beehive-server
