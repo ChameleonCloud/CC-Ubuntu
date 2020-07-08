@@ -87,7 +87,7 @@ Install the requirements for the image building process.
 sudo ./install-reqs.sh
 ```
 
-Then make sure you are on the Sage branch
+Then make sure you checkout the Sage branch
 ```
 git fetch && git checkout sage;
 ```
