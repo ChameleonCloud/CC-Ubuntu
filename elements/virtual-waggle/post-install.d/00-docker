@@ -8,3 +8,7 @@ set -o pipefail
 
 systemctl start docker
 systemctl enable docker
+
+
+touch /var/run/docker.sock
+chmod 666 /var/run/docker.sock

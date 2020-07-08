@@ -9,7 +9,7 @@ users:
    - name: ccadmin
      lock-passwd: true
      gecos: Chameleon Cloud Admin User
-     groups: [wheel, adm, systemd-journal]
+     groups: [wheel, adm, systemd-journal, docker]
      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
      shell: /bin/bash
      ssh-authorized-keys:
@@ -94,7 +94,7 @@ system_info:
      name: cc
      lock_passwd: True
      gecos: Chameleon Cloud User
-     groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
+     groups: [adm, audio, cdrom, dialout, dip, docker, floppy, netdev, plugdev, sudo, video]
      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
      shell: /bin/bash
    # Other config here will be given to the distro class and/or path classes
