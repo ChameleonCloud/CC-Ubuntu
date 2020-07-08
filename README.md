@@ -96,6 +96,6 @@ Then run create-image.py
 ```
 python create-image.py --release bionic --variant sage --region CHI@UC
 ```
-After running this command, you must upload the image created to the OpenStack infrastructure
+After running this command, you must upload the image created to the OpenStack infrastructure. The command will show up after the completion of create-image.py. It will look similar to the command shown below. 
 ```
 glance image-create --name "Sage-VIRTUAL-WAGGLE" --disk-format qcow2 --container-format bare --file /tmp/tmp.R0Ko9o7lBc/common/Sage18.04-VIRTUAL-WAGGLE.qcow2
