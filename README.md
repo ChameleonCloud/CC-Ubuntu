@@ -87,12 +87,7 @@ Install the requirements for the image building process.
 sudo ./install-reqs.sh
 ```
 
-Then make sure you checkout the Sage branch
-```
-git fetch && git checkout sage;
-```
-
-Run create-image.py
+Run create-image.py. Below is a sample run option.
 ```
 python create-image.py --release bionic --variant sage --region CHI@UC
 ```
