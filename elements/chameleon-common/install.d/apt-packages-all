@@ -45,4 +45,5 @@ systemtap
 systemtap-client
 systemtap-runtime
 systemtap-sdt-dev
+ufw
 unzip

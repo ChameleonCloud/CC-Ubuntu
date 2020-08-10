@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 set -e
 
 if [ "$EUID" -ne 0 ]; then
@@ -10,15 +11,27 @@ fi
 ### OS-specific installs
 
 function centos_reqs() {
-  yum makecache fast
-  yum install -y epel-release
-  yum install -y qemu-img python-pip kpartx uboot-tools
+  DNF='dnf'
+  if [[ $VERSION_ID = '8' ]]; then
+    dnf makecache --timer
+    dnf install -y python3-pip
+  else
+  	yum makecache fast
+  	yum install -y python-pip uboot-tools
+  	DNF='yum'
+  fi
+  $DNF install -y epel-release
+  $DNF install -y qemu-img kpartx
+  $DNF install -y ufw
+  ufw --force enable
 }
 
 function ubuntu_reqs() {
   apt-get update
-  apt-get -qq install -y qemu-utils python-pip kpartx u-boot-tools
+  apt-get -qq install -y qemu-utils python3-pip kpartx u-boot-tools
 }
+
+python --version
 
 source /etc/os-release
 if [[ $ID = 'ubuntu' ]]; then

@@ -17,4 +17,3 @@ ufw default deny incoming
 
 # Enable ufw
 ufw --force enable
-

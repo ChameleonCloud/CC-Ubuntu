@@ -18,4 +18,4 @@ echo "libguestfs-tools libguestfs/update-appliance boolean true" | sudo debconf-
 apt-get install -y $(cat ${SCRIPTDIR}/apt-packages-all ${SCRIPTDIR}/apt-packages-${DIB_RELEASE})
 
 pip3 install setuptools --upgrade
-pip3 install -r ${SCRIPTDIR}/requirements.txt
+pip3 install -r ${SCRIPTDIR}/requirements.txt --ignore-installed PyYAML
