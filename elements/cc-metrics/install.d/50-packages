@@ -25,7 +25,7 @@ else
     exit 1
 fi
 
-# collectd is installed with python2 (the default python version for ubuntu releases)
+# collectd uses python2 (the default python version for ubuntu releases)
 # https://serverfault.com/questions/642893/using-collectd-with-python-3
 # requests is required
 wget https://bootstrap.pypa.io/get-pip.py

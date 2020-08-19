@@ -39,7 +39,7 @@ mkdir -p /opt/chameleon
 cd /opt/chameleon
 git clone https://github.com/ChameleonCloud/collectd-ceilometer-plugin.git
 cd collectd-ceilometer-plugin
-# collectd is installed with python2 (the default python version for ubuntu releases)
+# collectd uses python2 (the default python version for ubuntu releases)
 # https://serverfault.com/questions/642893/using-collectd-with-python-3
 python2 setup.py install
 
