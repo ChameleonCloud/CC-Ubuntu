@@ -30,6 +30,7 @@ libssl-dev
 libstdc++6
 libtool
 libxml2-dev
+libvirt-dev
 nscd
 patchutils
 puppet

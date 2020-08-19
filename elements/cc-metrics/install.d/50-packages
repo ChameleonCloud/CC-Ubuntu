@@ -25,7 +25,11 @@ else
     exit 1
 fi
 
-#wget https://bootstrap.pypa.io/get-pip.py
-#python2 get-pip.py
-#pip2 install --ignore-installed PyYAML
+# collectd is installed with python2 (the default python version for ubuntu releases)
+# https://serverfault.com/questions/642893/using-collectd-with-python-3
+# requests is required
+wget https://bootstrap.pypa.io/get-pip.py
+python2 get-pip.py
+pip2 install requests
+
 pip3 install gnocchiclient

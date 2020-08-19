@@ -20,23 +20,14 @@ if [ $DISTRO_NAME == $CENTOS ]; then
     COLLECTD_PLUGIN_PATH=/usr/lib/python2.7/site-packages/collectd_openstack/
 
 elif [ $DISTRO_NAME == $UBUNTU ]; then
-    if [ $DIB_RELEASE == $XENIAL ]; then
-        COLLECTD_CONFD=/etc/collectd/collectd.conf.d
-        COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
-        COLLECTD_PLUGIN_PATH=/usr/local/lib/python3.6/dist-packages/collectd_openstack
-
-    elif [ $DIB_RELEASE == $TRUSTY ]; then
+    if [ $DIB_RELEASE == $TRUSTY ]; then
         echo "NOTE: METRICS UNSUPPORTED ON TRUSTY"
         exit 0
         
-    elif [ $DIB_RELEASE == $BIONIC ]; then
+    else
         COLLECTD_CONFD=/etc/collectd/collectd.conf.d
         COLLECTD_GLOBAL_CONF=/etc/collectd/collectd.conf
-        COLLECTD_PLUGIN_PATH=/usr/local/lib/python3.6/dist-packages/collectd_openstack
-        
-    else
-        echo "Unknown release name: '$DIB_RELEASE', only '$TRUSTY', '$XENIAL' and '$BIONIC' recognized"
-        exit 1
+        COLLECTD_PLUGIN_PATH=/usr/local/lib/python2.7/dist-packages/collectd_openstack
     fi
 else
     echo "Unknown distribution name: '$DISTRO_NAME', only '$CENTOS' and '$UBUNTU' recognized"
@@ -48,7 +39,9 @@ mkdir -p /opt/chameleon
 cd /opt/chameleon
 git clone https://github.com/ChameleonCloud/collectd-ceilometer-plugin.git
 cd collectd-ceilometer-plugin
-python3 setup.py install
+# collectd is installed with python2 (the default python version for ubuntu releases)
+# https://serverfault.com/questions/642893/using-collectd-with-python-3
+python2 setup.py install
 
 #cp ${SCRIPTDIR}/collectd-gnocchi-plugin.conf ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
 sed -e "s;%%PLUGIN_PATH%%;$COLLECTD_PLUGIN_PATH;" ${SCRIPTDIR}/collectd-gnocchi-plugin.conf > ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
