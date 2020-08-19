@@ -25,11 +25,13 @@ else
     exit 1
 fi
 
-# collectd uses python2 (the default python version for ubuntu releases)
+# collectd uses the default python version for ubuntu releases
 # https://serverfault.com/questions/642893/using-collectd-with-python-3
-# requests is required
+# requests is required when running ceilometer plugin using python2
 wget https://bootstrap.pypa.io/get-pip.py
 python2 get-pip.py
 pip2 install requests
+# libvirt is required when running ceilometer plugin using python3
+pip3 install libvirt-python
 
 pip3 install gnocchiclient
