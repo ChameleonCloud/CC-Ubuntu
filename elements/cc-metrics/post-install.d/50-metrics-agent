@@ -39,9 +39,10 @@ mkdir -p /opt/chameleon
 cd /opt/chameleon
 git clone https://github.com/ChameleonCloud/collectd-ceilometer-plugin.git
 cd collectd-ceilometer-plugin
-# collectd uses python2 (the default python version for ubuntu releases)
+# collectd uses the default python version for ubuntu releases
 # https://serverfault.com/questions/642893/using-collectd-with-python-3
 python2 setup.py install
+python3 setup.py install
 
 #cp ${SCRIPTDIR}/collectd-gnocchi-plugin.conf ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
 sed -e "s;%%PLUGIN_PATH%%;$COLLECTD_PLUGIN_PATH;" ${SCRIPTDIR}/collectd-gnocchi-plugin.conf > ${COLLECTD_CONFD}/collectd-gnocchi-plugin.conf
