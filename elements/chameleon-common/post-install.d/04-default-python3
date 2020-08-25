@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+UBUNTU=ubuntu
+XENIAL=xenial
+
+if [ $DISTRO_NAME == $UBUNTU ] && [ $DIB_RELEASE == $XENIAL ]; then
+    ln -sf /usr/bin/python3.6 /usr/bin/python
+    ln -sf /usr/local/bin/pip /usr/bin/pip3
+else
+	ln -sf /usr/bin/python3 /usr/bin/python
+fi
+
+ln -sf /usr/bin/pip3 /usr/bin/pip

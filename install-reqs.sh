@@ -49,4 +49,4 @@ fi
 
 # pip install --upgrade pip
 pip install networkx==2.2
-pip install diskimage-builder
+pip install diskimage-builder --ignore-installed PyYAML
