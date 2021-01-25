@@ -25,12 +25,8 @@ else
     exit 1
 fi
 
-# collectd uses the default python version for ubuntu releases
-# https://serverfault.com/questions/642893/using-collectd-with-python-3
-# requests is required when running ceilometer plugin using python2
-wget https://bootstrap.pypa.io/get-pip.py
-python2 get-pip.py
-pip2 install requests
+# requests is required when running ceilometer plugin
+pip3 install requests
 # libvirt is required when running ceilometer plugin using python3
 pip3 install libvirt-python
 
