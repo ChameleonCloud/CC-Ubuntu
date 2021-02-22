@@ -11,4 +11,9 @@ apt-get install -y ntp
 
 echo "server ntp.tacc.utexas.edu iburst" >> /etc/ntp.conf
 
+if [ ! -d "/run/lock" ] 
+then
+   mkdir -p /run/lock
+fi
+
 service ntp start

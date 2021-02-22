@@ -13,6 +13,7 @@ UBUNTU=ubuntu # https://github.com/openstack/diskimage-builder/blob/be8d9b6/disk
 TRUSTY=trusty
 XENIAL=xenial # https://github.com/openstack/diskimage-builder/blob/be8d9b6/diskimage_builder/elements/ubuntu/environment.d/10-ubuntu-distro-name.bash#L2
 BIONIC=bionic
+FOCAL=focal
 
 if [ $DISTRO_NAME == $CENTOS ]; then
     yum install -y $(cat ${SCRIPTDIR}/yum-packages)

@@ -39,7 +39,6 @@ python3-pip
 python3-setuptools
 qemu-utils
 rcs
-salt-common
 subversion
 swig
 systemtap

@@ -23,6 +23,7 @@ export DIB_RELEASE="$UBUNTU_ADJECTIVE"
 TRUSTY=trusty
 XENIAL=xenial
 BIONIC=bionic
+FOCAL=focal
 
 export DIB_PYTHON_VERSION=3
 
@@ -87,7 +88,7 @@ elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
   if [ "$VARIANT" != 'arm64' ]; then
     ELEMENTS="$ELEMENTS $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
   fi
-elif [ $UBUNTU_ADJECTIVE == $BIONIC ]; then
+elif [ $UBUNTU_ADJECTIVE == $BIONIC ] || [ $UBUNTU_ADJECTIVE == $FOCAL ]; then
   ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
 else
   echo "Unknown Ubuntu release"

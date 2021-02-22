@@ -12,6 +12,7 @@ UBUNTU_RELEASES = {
     'trusty': '14.04',
     'xenial': '16.04',
     'bionic': '18.04',
+    'focal': '20.04',
 }
 
 VARIANTS = {
