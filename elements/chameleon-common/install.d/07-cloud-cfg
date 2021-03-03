@@ -8,4 +8,8 @@ set -o pipefail
 
 SCRIPTDIR=$(dirname $0)
 
-cp ${SCRIPTDIR}/cloud-cfg-${DIB_RELEASE}.yaml /etc/cloud/cloud.cfg
+if [ ${DIB_RELEASE} == 'trusty' ]; then
+    cp ${SCRIPTDIR}/cloud-cfg-${DIB_RELEASE}.yaml /etc/cloud/cloud.cfg
+else
+    cp ${SCRIPTDIR}/cloud-cfg.yaml /etc/cloud/cloud.cfg
+fi
