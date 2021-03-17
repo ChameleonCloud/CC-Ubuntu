@@ -13,7 +13,7 @@ users:
      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
      shell: /bin/bash
      ssh-authorized-keys:
-       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPmeZ9wJIrKftXm4blsXVWT5u7Cm9EeQg4MEnIiGonv4EMLZWKjSSfQfTAd9WjMuF+gmrRN1bSxpMBsWymKETGQJaZlw5Yg5MgZbPsWFmsMg169yPzr+cltOtqTENYxVC/C72zpjGurOsPET7Sema99HWLDFQP0kho5XzJWRPZs+F+HV4D1cRpPfCFE2aj/N5MwnpC3K2p2/m4stf8v1+O6VvK6SSKhPZMPnvHZsSmotoSVOOyiIl9xbZ2e07rz9jHo9vaMOceXZsPZLiGHyYnn14Ceh6kEf2dF7epyR3h3trRaiUYknnY0IaclgaK6dxFp6kzdvGQMSkbSdqTyGH9 ccadmin
+       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIP5yCb+pms83A9f0JPDx+ILOAYy7OoxPf5MjZlL+JW/bWRKuMmQDYLi6F22QoFlRrL0LsNsR8m28F/4uox81QOVq6D+uXODUe0FLJF1SLowxVrhvtEQSb0p2Ep3F3Isk6niEVTYNz+Uyx1s5jZ3xF1CjUFt8fhggkZEn+mAxux8FQO35mJF0mbEVNAA/ZiApLmM8/oBxtOd9T3QHEoXD5wensAWlGk2HdQVUMHNFRLZPl3Oo4BHYI3CbD/mu6dOZLOF/bvJF6dnwmQI+JflSLHLwGObKdi96w+sOEQfuYA1hMCes4M7rTkrNwAoLJUxZjr/l1/EgJJbbEIGiKOUW4TtNTiaIfV58ynhKdlvd7sIEquWGnPTtz3qviSkEmPiub48mt99sMXbHCNOFTz4dIwtjC2RQEWbRbccdVYRYBXXM9p5lThcRiyWrgkneIi/wfaRCKXzpzhSREgWWrFQ6/8p0ZbLeT/UGP6B0Lo7u1MsTSGa54VzK8AfhYJLMXJH/V+59g0iMN/owcUknI6KdLrsP9TW9jB7mKwtHBHyxC4IGcEKwwT+rW1hyz3JfHr0GEzt4FW86Ryyv2nb4yB4RC/R8YkWOM9mSJsQbZkAmXVWVJLCzE36cH0SgyFZvYfW2O7Ly+pwnVIgoPfowRTHCxCyO07qI+S22WLEH1HNw98w== Chameleon admin access
 
 # If this is set, 'root' will not be able to ssh in and they
 # will get a message to login instead as the above $user (ubuntu)
