@@ -26,6 +26,7 @@ function extract_json_key {
 OPENRC=$(extract_json_key "openrc" "$JSON_VENDOR_DATA")
 
 echo -e $OPENRC >  /home/cc/openrc
+sed -i 's/^ *//g' /home/cc/openrc
 
 EOM
 
