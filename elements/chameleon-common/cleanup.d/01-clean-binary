@@ -6,6 +6,5 @@ fi
 set -eu
 set -o pipefail
 
-SCRIPTDIR=$(dirname $0)
+rm -rf "$TMP_MOUNT_PATH/usr/bin/qemu-*-static"
 
-cp ${SCRIPTDIR}/cloud-cfg.yaml /etc/cloud/cloud.cfg

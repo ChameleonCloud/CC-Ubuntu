@@ -1,3 +1,4 @@
+wheel
 python-cinderclient
 python-glanceclient
 python-heatclient
@@ -6,7 +7,4 @@ python-neutronclient
 python-novaclient
 python-openstackclient
 python-swiftclient
-# virtualenv version >= 20.0.0 doesn't work with
-# https://github.com/openstack/tripleo-image-elements/blob/master/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-apply-config#L6
-# virtualenv: error: too few arguments [--setuptools version]
-virtualenv==16.7.9
+virtualenv

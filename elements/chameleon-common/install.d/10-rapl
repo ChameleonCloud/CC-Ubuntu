@@ -1,11 +1,6 @@
 #!/bin/bash
 set -e
 
-if [ "$DIB_RELEASE" == 'trusty' ]; then
-    # trusty doesn't have RAPL
-    exit 0
-fi
-
 ARTIFACT_VER=0.1.0
 ARTIFACT_NAME=etrace2-ub1604
 ARTIFACT_TARGET=/usr/bin/etrace2

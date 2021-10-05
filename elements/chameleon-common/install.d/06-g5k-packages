@@ -6,17 +6,12 @@ fi
 set -eu
 set -o pipefail
 
-if [ "$DIB_RELEASE" != 'focal' ]; then
-    # this is for that release only.
-    exit 0
-fi
-
 pushd usr/local
 
 sudo apt-get install -y gem2deb debhelper git bridge-utils hwloc
 sudo gem install rspec-legacy_formatters
 
-git clone -b ubuntu-focal https://github.com/ChameleonCloud/g5k-checks.git
+git clone -b ubuntu-$DIB_RELEASE https://github.com/ChameleonCloud/g5k-checks.git
 
 pushd g5k-checks
 PACKAGE_PATH=$(dpkg-buildpackage | grep "dpkg-deb: building package" | sed 's/.*in..//g' | sed "s/'.*//g");
@@ -24,7 +19,6 @@ if [ "$PACKAGE_PATH" == "" ]; then
 	echo "Could not create the g5k-checks deb package"
 	exit 1
 fi
-
 
 sudo apt-get install -y rake ruby-rspec ntp ntpdate nfs-common ruby-rest-client ruby-json ohai fio
 sudo dpkg -i $PACKAGE_PATH

@@ -7,6 +7,9 @@ set -eu
 set -o pipefail
 
 # Establish firewall rules
+cat > /etc/setup_default_firewall <<- 'EOM'
+#!/bin/bash
+
 ufw limit ssh
 ufw allow http
 ufw allow https
@@ -17,3 +20,7 @@ ufw default deny incoming
 
 # Enable ufw
 ufw --force enable
+
+EOM
+
+chmod a+x /etc/setup_default_firewall

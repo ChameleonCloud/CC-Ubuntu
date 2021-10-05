@@ -7,48 +7,19 @@ set -o nounset
 
 DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 
-# This script assumes the following dependencies are installed:
-# * via Yum: git python-pip PyYAML qemu-img xz
-# * via Pip: diskimage-builder
-# * patch diskimage-builder for the lack of Python in the Ubuntu image:
-#   add "apt-get -y install python" to /usr/share/diskimage-builder/elements/dpkg/pre-install.d/99-apt-get-update
-
-### FIXME: The 'ubuntu' element ignores DIB_LOCAL_IMAGE (it's used by centos)
-### see https://github.com/openstack/diskimage-builder/blob/master/diskimage_builder/elements/ubuntu/root.d/10-cache-ubuntu-tarball#L23
-# # see https://cloud-images.ubuntu.com/releases/16.04/ for releases
-# BUILD_DATE="release-20161214"
-#
-# BASE_IMAGE="ubuntu-$UBUNTU_VERSION-server-cloudimg-amd64-disk1.img"
 export DIB_RELEASE="$UBUNTU_ADJECTIVE"
-TRUSTY=trusty
-XENIAL=xenial
 BIONIC=bionic
 FOCAL=focal
 
 export DIB_PYTHON_VERSION=3
 
-#
-# URL_ROOT="https://cloud-images.ubuntu.com/releases/$UBUNTU_VERSION/$BUILD_DATE"
-# if [ ! -f "$BASE_IMAGE" ]; then
-#     curl -L -O "$URL_ROOT/$BASE_IMAGE"
-# fi
-#
-# # Check checksum
-# IMAGE_SHA256=$(curl $URL_ROOT/SHA256SUMS | grep "$BASE_IMAGE\$" | awk '{print $1}' | xargs echo)
-# echo "SHA256: $IMAGE_SHA256"
-# if ! sh -c "echo $IMAGE_SHA256 $BASE_IMAGE | sha256sum -c"; then
-#     echo "Wrong checksum for $BASE_IMAGE. Has the image changed?"
-#     exit 1
-# fi
-#
-# export DIB_LOCAL_IMAGE=`pwd`/$BASE_IMAGE
-
 #Clone the required repositories for Heat contextualization elements
+git config --global http.sslverify false
 if [ ! -d tripleo-image-elements ]; then
-  git clone https://git.openstack.org/openstack/tripleo-image-elements.git
+  git clone -b stable/train https://git.openstack.org/openstack/tripleo-image-elements.git
 fi
 if [ ! -d heat-agents ]; then
-  git clone https://git.openstack.org/openstack/heat-agents.git
+  git clone -b stable/train https://git.openstack.org/openstack/heat-agents.git
 fi
 
 export ELEMENTS_PATH=$DIR/elements
@@ -57,6 +28,21 @@ export LIBGUESTFS_BACKEND=direct
 export ELEMENTS_PATH='elements:tripleo-image-elements/elements:heat-agents'
 export DEPLOYMENT_BASE_ELEMENTS="heat-config heat-config-script"
 export AGENT_ELEMENTS="os-collect-config os-refresh-config os-apply-config"
+
+IFS=' ' read -ra ELEM <<< "$AGENT_ELEMENTS"
+for i in "${ELEM[@]}"; do
+  ELEM_FILE="tripleo-image-elements/elements/$i/install.d/$i-source-install/10-$i"
+  PKG_FILE="tripleo-image-elements/elements/$i/package-installs.yaml"
+  # virtualenv version >= 20.0.0 doesn't work with
+  # https://github.com/openstack/tripleo-image-elements/blob/master/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-apply-config#L6
+  # virtualenv: error: too few arguments [--setuptools version]
+  sed -i 's/--setuptools//' $ELEM_FILE
+  # error in anyjson setup command: use_2to3 is invalid
+  # setuptools>=58 breaks support for use_2to3
+  sed -i "s/'setuptools>=1.0'/'setuptools>=1.0,<58.0'/" $ELEM_FILE
+  sed -i "s/python-dev://" $PKG_FILE
+done
+
 #install pip and virtualenv from distribution because of a conflict between pip version and PyYAML
 #ref: https://stackoverflow.com/questions/49911550/how-to-upgrade-disutils-package-pyyaml
 export DIB_INSTALLTYPE_pip_and_virtualenv=package
@@ -64,16 +50,10 @@ export DIB_INSTALLTYPE_pip_and_virtualenv=package
 TMPDIR=`mktemp -d`
 mkdir -p $TMPDIR/common
 OUTPUT_FILE="$TMPDIR/common/$IMAGE_NAME.qcow2"
+ARCH="amd64"
 
-ELEMENTS="vm"
-#if [ "$FORCE_PARTITION_IMAGE" = true ]; then
-#  ELEMENTS="baremetal"
-#fi
-
-# Don't use "vm" element, to avoid "bootloader" and "block-device-efi" elements for ARM64
 if [ "$VARIANT" = 'arm64' ]; then
-  ELEMENTS=""
-  export FLASH_KERNEL_SKIP=true
+  ARCH=$VARIANT
 fi
 
 if [ -f "$OUTPUT_FILE" ]; then
@@ -81,34 +61,13 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
-if [ $UBUNTU_ADJECTIVE == $TRUSTY ]; then
-  ELEMENTS="$ELEMENTS"
-elif [ $UBUNTU_ADJECTIVE == $XENIAL ]; then
-  ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
-  if [ "$VARIANT" != 'arm64' ]; then
-    ELEMENTS="$ELEMENTS $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
-  fi
-elif [ $UBUNTU_ADJECTIVE == $BIONIC ] || [ $UBUNTU_ADJECTIVE == $FOCAL ]; then
-  ELEMENTS="$ELEMENTS dhcp-all-interfaces cc-metrics"
-else
-  echo "Unknown Ubuntu release"
-  exit 1
-fi
-
-SITE_ELEMENTS=""
-if $KVM; then
-  echo "kvm image"
-  SITE_ELEMENTS=""
-else
-  echo "chi image"
-  SITE_ELEMENTS="chi"
-fi
+ELEMENTS="vm dhcp-all-interfaces pip-and-virtualenv $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
 
 disk-image-create \
   chameleon-common \
   $ELEMENTS \
-  $SITE_ELEMENTS \
   $EXTRA_ELEMENTS \
+  -a $ARCH \
   -o $OUTPUT_FILE
 
 if [ -f "$OUTPUT_FILE.qcow2" ]; then

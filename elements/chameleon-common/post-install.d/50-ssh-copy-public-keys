@@ -9,16 +9,9 @@ set -o pipefail
 # script for authorizing user's SSH keys
 cat > /etc/copy_user_ssh_keys <<- 'EOM'
 #!/bin/bash
-
-OPENSTACK_VENDOR_DATA='http://169.254.169.254/openstack/latest/vendor_data.json'
-OPENSTACK_VENDOR_DATA_2='http://169.254.169.254/openstack/latest/vendor_data2.json'
-
-JSON_VENDOR_DATA=$(curl -s $OPENSTACK_VENDOR_DATA_2)
-if [ "$JSON_VENDOR_DATA" = '{}' ]; then
-  JSON_VENDOR_DATA=$(curl -s $OPENSTACK_VENDOR_DATA)
-fi
-
-KEYPAIRS=$(python3 -c "import json; print(''.join(obj['keypair']['public_key'] for obj in json.loads('$JSON_VENDOR_DATA', strict=False)['chameleon']['ssh_keypairs']))")
+ 
+SSH_KEYPAIRS=$(cc-read-vendordata "ssh_keypairs")
+KEYPAIRS=$(python3 -c "import json; print(''.join(obj['keypair']['public_key'] for obj in json.loads('$SSH_KEYPAIRS', strict=False)))")
 
 echo -e "$KEYPAIRS" >> /home/cc/.ssh/authorized_keys
 

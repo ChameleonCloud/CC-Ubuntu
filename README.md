@@ -15,13 +15,13 @@ Install on Ubuntu or CentOS with `install-reqs.sh`. It installs
 
 The main script takes an output variant as a single input parameter:
 ```
-python create-image.py <output_variant> [--release {trusty, xenial}]
+python create-image.py <output_variant> [--release <release>]
 ```
 
 For this image, the current supported variants are:
 
 * `base`: General Ubuntu image
-* `gpu`: includes CUDA 8 driver, only supported with 16.04 Xenial.
+* `gpu`: includes CUDA driver
   * *Needs to be built from another Ubuntu image with the **same kernel*** as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
 * `arm64`: Creates post-processed kernel and ramdisk, and bootscript for U-Boot
   * Can only be built on an ARM64 node, currently
