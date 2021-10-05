@@ -131,4 +131,5 @@ write_files:
 
 runcmd:
   - su cc -c /etc/auto_generate_openrc
+  - su cc -c /etc/copy_user_ssh_keys
 
