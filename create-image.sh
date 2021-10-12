@@ -84,7 +84,7 @@ if [ $? -eq 0 ]; then
   echo "Image built in $OUTPUT_FILE"
   if [ -f "$OUTPUT_FILE" ]; then
     echo "to add the image in glance run the following command:"
-    echo "glance image-create --name \"$IMAGE_NAME\" --disk-format qcow2 --container-format bare --file $OUTPUT_FILE"
+    echo "openstack image create --disk-format qcow2 --container-format bare --file $OUTPUT_FILE \"$IMAGE_NAME\"" 
   fi
 else
   echo "Failed to build image in $OUTPUT_FOLDER"

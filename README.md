@@ -1,7 +1,7 @@
 # CC-Ubuntu
 
 This directory contains the scripts used to generate the Chameleon KVM and
-bare-metal Ubuntu image, including Ubuntu14.04, Ubuntu16.04, and Ubuntu18.04. It relies on diskimage-builder.
+bare-metal Ubuntu images. It relies on diskimage-builder.
 
 ## Requirements
 
@@ -23,14 +23,14 @@ For this image, the current supported variants are:
 * `base`: General Ubuntu image
 * `gpu`: includes CUDA driver
   * *Needs to be built from another Ubuntu image with the **same kernel*** as it grabs the kernel info to install headers, and also on a GPU node so the NVidia installer doesn't abort.
-* `arm64`: Creates post-processed kernel and ramdisk, and bootscript for U-Boot
-  * Can only be built on an ARM64 node, currently
+* `arm64`: Creates post-processed kernel and ramdisk
+  * Can be built on an ARM64 node or x86 node
 
 The `.py` script does some parameter parsing, configures then environment, then
 `exec`'s the `.sh` script. Calling the `.sh` directly requires a few envvars
-to be set
+to be set.
 
-At the end of its execution, the script provides the Glance command that can be
+At the end of its execution, the script provides the OpenStack command that can be
 used to upload the image to an existing OpenStack infrastructure.
 
 This script does the following:
@@ -40,7 +40,7 @@ This script does the following:
 * Generate an image compatible with OpenStack KVM and bare-metal
 
 The image must then be uploaded and registered with Glance (currently done
-manually, by running the Glance command given at the end of execution).
+manually, by running the OpenStack command given at the end of execution).
 
 ## Automated/Jenkins
 
