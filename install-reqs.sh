@@ -20,3 +20,4 @@ python --version
 ubuntu_reqs
 
 pip install --upgrade pip
+pip install diskimage-builder
