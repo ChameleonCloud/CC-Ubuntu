@@ -17,7 +17,7 @@ OPENSTACK_VENDOR_DATA_2='http://169.254.169.254/openstack/latest/vendor_data2.js
 JSON_VENDOR_DATA=$(curl -s $OPENSTACK_VENDOR_DATA_2)
 JSON_VENDOR_DATA=$(echo $JSON_VENDOR_DATA | jq -r .chameleon)
 
-echo $JSON_VENDOR_DATA | jq .$PARAM | tr -d '"'
+echo $JSON_VENDOR_DATA | jq -r .$PARAM
 
 EOM
 
