@@ -8,8 +8,5 @@ set -o pipefail
 
 SCRIPTDIR=$(dirname $0)
 
-ln -sf /usr/bin/python3 /usr/bin/python
-ln -sf /usr/bin/pip3 /usr/bin/pip
-
-pip3 install --upgrade pip
-pip3 install -r ${SCRIPTDIR}/requirements.txt --ignore-installed PyYAML
+pip install --upgrade pip
+pip install -r ${SCRIPTDIR}/requirements.txt --ignore-installed PyYAML
