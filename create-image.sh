@@ -61,7 +61,7 @@ if [ -f "$OUTPUT_FILE" ]; then
   rm -f "$OUTPUT_FILE"
 fi
 
-ELEMENTS="vm dhcp-all-interfaces pip-and-virtualenv $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
+ELEMENTS="vm block-device-efi dhcp-all-interfaces pip-and-virtualenv $AGENT_ELEMENTS $DEPLOYMENT_BASE_ELEMENTS"
 
 disk-image-create \
   chameleon-common \

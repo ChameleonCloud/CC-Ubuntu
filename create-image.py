@@ -24,7 +24,7 @@ VARIANTS = {
     },
     'arm64': {
         'name-suffix': '-ARM64',
-        'extra-elements': 'block-device-efi',
+        'extra-elements': '',
     },
 }
 
