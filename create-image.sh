@@ -36,7 +36,7 @@ for i in "${ELEM[@]}"; do
   # virtualenv version >= 20.0.0 doesn't work with
   # https://github.com/openstack/tripleo-image-elements/blob/master/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-apply-config#L6
   # virtualenv: error: too few arguments [--setuptools version]
-  sed -i 's/--setuptools//' $ELEM_FILE
+  sed -i 's/virtualenv --setuptools/python3 -m venv/' $ELEM_FILE
   # error in anyjson setup command: use_2to3 is invalid
   # setuptools>=58 breaks support for use_2to3
   sed -i "s/'setuptools>=1.0'/'setuptools>=1.0,<58.0'/" $ELEM_FILE
