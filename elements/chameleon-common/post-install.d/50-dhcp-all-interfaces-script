@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+SCRIPTDIR=$(dirname $0)
+
+cat ${SCRIPTDIR}/dhcp-all-interfaces.sh > /usr/local/sbin/dhcp-all-interfaces.sh
+sed -i "s/DIB_DHCP_TIMEOUT/${DIB_DHCP_TIMEOUT:-30}/" /usr/local/sbin/dhcp-all-interfaces.sh

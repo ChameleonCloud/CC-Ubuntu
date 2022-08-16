@@ -19,6 +19,11 @@ ssh_pwauth:   0
 # This will cause the set+update hostname module to not operate (if true)
 preserve_hostname: false
 
+# network is configured via
+# https://github.com/openstack/diskimage-builder/tree/master/diskimage_builder/elements/dhcp-all-interfaces
+network:
+  config: disabled
+
 # Example datasource config
 datasource:
   OpenStack:
@@ -46,9 +51,6 @@ cloud_init_modules:
 
 # The modules that run in the 'config' stage
 cloud_config_modules:
-# Emit the cloud config ready event
-# this can be used by upstart jobs for 'start on cloud-config'.
-  - emit_upstart
   - disk_setup
   - mounts
   - ssh-import-id

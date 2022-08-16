@@ -20,7 +20,7 @@ if [ "$PACKAGE_PATH" == "" ]; then
 	exit 1
 fi
 
-sudo apt-get install -y rake ruby-rspec ntp ntpdate nfs-common ruby-rest-client ruby-json ohai fio
+sudo apt-get install -y rake ruby-rspec ntp ntpdate ruby-rest-client ruby-json ohai fio
 sudo dpkg -i $PACKAGE_PATH
 popd
 
