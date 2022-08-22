@@ -37,6 +37,9 @@ for i in "${ELEM[@]}"; do
   # https://github.com/openstack/tripleo-image-elements/blob/master/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-apply-config#L6
   # virtualenv: error: too few arguments [--setuptools version]
   sed -i 's/virtualenv --setuptools/python3 -m venv/' $ELEM_FILE
+  if [ $i = 'os-collect-config' ]; then
+    sed -i '/^source*/a \$OS_COLLECT_CONFIG_VENV_DIR\/bin\/pip install --upgrade pip' $ELEM_FILE
+  fi
   # error in anyjson setup command: use_2to3 is invalid
   # setuptools>=58 breaks support for use_2to3
   sed -i "s/'setuptools>=1.0'/'setuptools>=1.0,<58.0'/" $ELEM_FILE
