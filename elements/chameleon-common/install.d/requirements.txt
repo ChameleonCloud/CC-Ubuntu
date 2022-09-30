@@ -7,4 +7,3 @@ python-neutronclient
 python-novaclient
 python-openstackclient
 python-swiftclient
-virtualenv
