@@ -13,7 +13,7 @@ function ubuntu_reqs() {
   apt-get update
   # install qemu-user-static and binfmt-support for building arm on x86_64
   # ref: https://wiki.debian.org/RaspberryPi/qemu-user-static
-  apt-get -qq install -y qemu-utils python3-pip kpartx qemu-user-static binfmt-support u-boot-tools grub-common
+  apt-get -qq install -y qemu-utils python3-pip kpartx qemu-user-static binfmt-support u-boot-tools grub2-common
 }
 
 python --version
