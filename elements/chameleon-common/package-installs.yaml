@@ -21,6 +21,7 @@ gdb:
 git:
   phase: post-install.d
 gfortran:
+grub2-common:
 indent:
 intltool:
 libapr1:
