@@ -13,11 +13,3 @@ cat > '/etc/default/grub.d/99-pci-settings.cfg' <<- EOM
 GRUB_CMDLINE_LINUX_DEFAULT="\$GRUB_CMDLINE_LINUX_DEFAULT pci=realloc=off"
 EOM
 
-grub_cfg=/boot/grub/grub.cfg
-if [[ -f "$grub_cfg" ]]; then
-    cp "$grub_cfg" "$grub_cfg.bak"
-fi
-grub-mkconfig > /boot/grub/grub.cfg
-
-
-sudo update-initramfs -u
