@@ -15,5 +15,3 @@ EOM
 
 cp /boot/grub/grub.cfg /boot/grub/grub.cfg.bak
 grub-mkconfig > /boot/grub/grub.cfg
-
-sudo update-initramfs -u
