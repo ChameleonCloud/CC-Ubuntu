@@ -6,12 +6,19 @@ fi
 set -eu
 set -o pipefail
 
+builddeps() {
+  apt-get "$1" -y libxml2-dev libneon27-dev libjson-c-dev libcurl4-openssl-dev libfuse-dev libssl-dev
+}
+
 # install cloudfuse
+builddeps install
 git clone https://github.com/ChameleonCloud/cc-cloudfuse.git
 cd cc-cloudfuse/
 ./configure
 make
 make install
+builddeps remove
+apt autoremove -y
 
 # auto-mount object store
 cat > /etc/auto_mount_readme <<- EOM
