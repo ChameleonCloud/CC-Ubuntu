@@ -24,6 +24,8 @@ EOM
 # Regenerate kernel
 sudo update-initramfs -u
 
-rmmod nouveau
+if lsmod | grep -wq nouveau; then
+  rmmod nouveau
+fi
 
 exit 0
