@@ -7,28 +7,21 @@ set -eu
 set -x
 set -o pipefail
 
-NVIDIA_TMP_FOLDER=/root/tmp
-export TMPDIR=$NVIDIA_TMP_FOLDER
-
 #############################################################
 # Installation (runfile)
 #############################################################
 
-# compare chroot kernel with running kernel
-CHROOT_KERNEL=$(basename $(ls -td -- /lib/modules/*/ | head -n 1))
-RUNNING_KERNEL=$(uname -r)
-if [ "$CHROOT_KERNEL" != "$RUNNING_KERNEL" ]; then
-	echo "Unmatched kernel!"
-	exit 1	
-fi
+# Load Nvidia's apt keys
+nvidia_release="${UBUNTU_VERSION//\./}"
+platform="$(uname -i)"
+nvidia_keyring_pkg=cuda-keyring_1.0-1_all.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu"$nvidia_release"/"$platform"/"$nvidia_keyring_pkg"
+sudo dpkg -i "$nvidia_keyring_pkg"
+rm "$nvidia_keyring_pkg"
 
-# Install kernel headers and wget
-sudo apt-get -qq install -y build-essential linux-headers-$(uname -r) wget
+sudo apt update
 
-# Get the NVIDIA CUDA Toolkit for Ubuntu 16
-wget -nv https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
-
-# Install the NVIDIA CUDA Toolkit for Ubuntu 16
-sudo sh cuda_11.2.0_460.27.04_linux.run --samples --toolkit --driver --silent --tmpdir $NVIDIA_TMP_FOLDER
+# Install required packages
+sudo apt-get -qq install -y build-essential linux-generic-hwe-"$UBUNTU_VERSION" cuda
 
 exit 0

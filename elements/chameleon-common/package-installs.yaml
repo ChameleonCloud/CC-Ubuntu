@@ -1,18 +1,10 @@
 ansible:
 autoconf:
 automake:
-bison:
 build-essential:
-byacc:
 bzip2:
-cscope:
-ctags:
 curl:
 diffstat:
-doxygen:
-dwz:
-elfutils:
-flex:
 g++:
 gdb:
 # git is installed by source-repositories element with build-only
@@ -20,33 +12,29 @@ gdb:
 # just need to re-install git in post install phase
 git:
   phase: post-install.d
-gfortran:
 grub2-common:
-indent:
-intltool:
-libapr1:
-libapr1-dev:
-libcurl4-openssl-dev:
-libdwarf-dev:
-libffi-dev:
-libgfortran-7-dev:
-libfuse-dev:
 libguestfs-tools:
-libjson-c-dev:
-libneon27-dev:
-libssl-dev:
 libstdc++6:
 libtool:
-libxml2-dev:
-libvirt-dev:
+libxml2:
+openssl:
 nfs-common:
 nscd:
 patchutils:
 puppet:
+python3-cinderclient:
 python3-dev:
   dib_python_version: 3
+python3-glanceclient:
+python3-heatclient:
+python3-keystoneclient:
+python3-neutronclient:
+python3-novaclient:
+python3-openstackclient:
 python3-setuptools:
   dib_python_version: 3
+python3-swiftclient:
+python3-wheel:
 qemu-utils:
 rcs:
 subversion:

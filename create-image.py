@@ -11,6 +11,7 @@ import sys
 UBUNTU_RELEASES = {
     'bionic': '18.04',
     'focal': '20.04',
+    'jammy': '22.04',
 }
 
 VARIANTS = {

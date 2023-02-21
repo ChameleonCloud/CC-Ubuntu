@@ -8,8 +8,6 @@ set -o nounset
 DIR="$(dirname $0)" # http://stackoverflow.com/a/59916/194586
 
 export DIB_RELEASE="$UBUNTU_ADJECTIVE"
-BIONIC=bionic
-FOCAL=focal
 
 export DIB_PYTHON_VERSION=3
 

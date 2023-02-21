@@ -1,3 +1,5 @@
+heat-agents/
+tripleo-image-elements/
 CC-Ubuntu*
 *.qcow2
 *.qcow2.xz

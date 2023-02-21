@@ -19,5 +19,6 @@ function ubuntu_reqs() {
 python --version
 ubuntu_reqs
 
-pip install --upgrade pip
-pip install diskimage-builder
+# We install diskimage-builder directly from pip because we care about OpenStack's release
+# cycle, not Ubuntu's
+pip install diskimage-builder==3.26.0
