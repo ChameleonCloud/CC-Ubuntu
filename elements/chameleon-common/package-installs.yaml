@@ -3,6 +3,7 @@ autoconf:
 automake:
 build-essential:
 bzip2:
+chrony:
 curl:
 diffstat:
 g++:
